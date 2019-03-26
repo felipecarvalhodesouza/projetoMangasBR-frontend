@@ -10,6 +10,7 @@ import { ErrorInterceptorProvider } from '../interceptors/ErrorInterceptor';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
+import { CollectionService } from '../services/collection.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StorageService } from '../services/storage.service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ErrorInterceptorProvider,
     AuthService,
-    StorageService
+    StorageService,
+    CollectionService
   ]
 })
 export class AppModule {}

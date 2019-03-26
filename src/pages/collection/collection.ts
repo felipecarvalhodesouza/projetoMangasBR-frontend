@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CollectionService } from '../../services/collection.service';
 
 @IonicPage()
 @Component({
@@ -8,11 +9,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CollectionPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public collectionService: CollectionService) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CollectionPage');
+    this.collectionService.findAll().subscribe(response => {
+      console.log(response);
+      },
+      error => {
+        console.log(error);
+      })
   }
 
 }
