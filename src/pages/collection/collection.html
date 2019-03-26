@@ -8,5 +8,12 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Minha coleção</p>
+    <ion-grid>
+        <ion-row *ngFor="let row of grid">
+            <ion-col width-33 *ngFor="let item of row">
+            <img src="{{bucketUrl}}/title{{item.id}}.jpg">
+            <p style="text-align: center"> {{item.name}} </p>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
 </ion-content>

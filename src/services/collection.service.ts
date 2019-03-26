@@ -13,5 +13,7 @@ export class CollectionService {
 
     findAll() : Observable<TitleDTO[]> {
         return this.http.get<TitleDTO[]>(`${API_CONFIG.baseUrl}/titles`);
+
+         
     }
 } 
