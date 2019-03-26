@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { CollectionPage } from '../collection/collection'
 
 @IonicPage()
 @Component({
@@ -10,6 +11,10 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public menu: MenuController) {
 
+  }
+
+  login(){
+    this.navCtrl.setRoot('CollectionPage')
   }
 
   ionViewWillEnter() {
