@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
 import { CollectionService } from '../services/collection.service';
+import { UserService } from '../services/domain/user.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CollectionService } from '../services/collection.service';
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
-    CollectionService
+    CollectionService,
+    UserService
   ]
 })
 export class AppModule {}

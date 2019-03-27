@@ -6,5 +6,9 @@
 </ion-navbar>
 
 <ion-content padding>
-  {{ email }}
+  <ion-avatar>
+    <img class="circle" [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'">
+  </ion-avatar>
+  <h2 text-center>{{user?.name}}</h2>
+  <p text-center>{{user?.email}}</p>
 </ion-content>
