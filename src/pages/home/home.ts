@@ -43,4 +43,13 @@ export class HomePage {
     this.collectionService.findUser();
   }
 
+  ionViewDidEnter(){
+    this.auth.refreshToken()
+    .subscribe(response => {
+      this.auth.successfulLogin(response.headers.get('Authorization'));
+      this.navCtrl.setRoot('CollectionPage');
+    },
+    error => {});
+  }
+
 }
