@@ -26,10 +26,12 @@ export class CollectionService {
 
     findUser(){
         let localUser = this.storage.getLocalUser();
-        this.userService.findByEmail(localUser.email)
-        .subscribe(response => {
-            this.user = response;
-        },
-          error => {});
+            if(localUser){
+            this.userService.findByEmail(localUser.email)
+            .subscribe(response => {
+                this.user = response;
+            },
+            error => {});
+            }
     }
 }

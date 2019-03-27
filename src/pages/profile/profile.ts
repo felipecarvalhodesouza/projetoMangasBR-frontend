@@ -4,6 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { UserDTO } from '../../models/user.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { UserService } from '../../services/domain/user.service';
+import { CollectionService } from '../../services/collection.service';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,8 @@ export class ProfilePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public storage: StorageService,
-              public userService: UserService) {
+              public userService: UserService,
+              public collectionService: CollectionService) {
   }
 
   ionViewDidLoad() {
@@ -28,7 +30,14 @@ export class ProfilePage {
           this.user = response;
           this.getImageIfExists();
         },
-        error => {});
+        error => {
+          if(error.status == 403){
+          this.navCtrl.setRoot('HomePage');
+        }
+      });
+    }
+    else {
+      this.navCtrl.setRoot('HomePage');
     }
   }
 
@@ -38,6 +47,10 @@ export class ProfilePage {
       this.user.imageUrl = `${API_CONFIG.bucketBaseUrl}/user-profile${this.user.id}.jpg`;
     },
     error => {});
+  }
+
+  ionViewDidLeave() {
+    this.collectionService.findUser();
   }
 
 }
