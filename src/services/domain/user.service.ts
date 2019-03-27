@@ -23,4 +23,15 @@ export class UserService{
         //blob quer dizer que a resposta será uma imagem e não um json
         return this.http.get(url, {responseType: 'blob'});
     }
+
+    insert(obj: UserDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/users`,
+            obj,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
 }
