@@ -1,3 +1,6 @@
 page-sign-up {
-
+    
+    form > p {
+        color: color($colors, danger);
+    }
 }

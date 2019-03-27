@@ -16,8 +16,8 @@ export class SignUpPage {
               public formBuilder: FormBuilder) {
 
               this.formGroup = this.formBuilder.group({
-                nome: ['desouzafelipecarvalho@gmail.com', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]], 
-                email: ['123', [Validators.required, Validators.email]]
+                name: ['Felipe Carvalho de Souza', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]], 
+                email: ['desouzafelipecarvalho@gmail.com', [Validators.required, Validators.email]]
               });
   }
 
