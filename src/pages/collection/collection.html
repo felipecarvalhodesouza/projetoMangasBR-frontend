@@ -9,8 +9,8 @@
 
 <ion-content padding>
     <ion-grid>
-        <ion-row *ngFor="let row of grid">
-            <ion-col width-33 *ngFor="let item of row">
+        <ion-row>
+            <ion-col width-33 *ngFor="let item of items">
             <img src="{{bucketUrl}}/title{{item.id}}.jpg">
             <p style="text-align: center"> {{item.name}} </p>
             </ion-col>
