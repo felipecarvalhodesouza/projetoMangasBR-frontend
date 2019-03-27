@@ -4,6 +4,9 @@ import { CollectionService } from '../../services/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';
+import { UserDTO } from '../../models/user.dto';
+import { StorageService } from '../../services/storage.service';
+import { UserService } from '../../services/domain/user.service';
 
 @IonicPage()
 @Component({
@@ -19,12 +22,12 @@ export class CollectionPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public collectionService: CollectionService) {
-
   }
 
   ionViewDidLoad() {
+    
     this.collectionService.findAll().subscribe(response => {
-      this.items=response.content;
+      this.items=response.titles;
       console.log(this.items);
       },
       error => {

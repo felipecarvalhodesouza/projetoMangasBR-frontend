@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { LocalUser } from "../models/local_user";
 import { STORAGE_KEYS } from "../config/storage_keys.config";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class StorageService{
@@ -8,6 +9,7 @@ export class StorageService{
     // o local storage armazena strings, dessa forma, ao fazer um get, é necessário
     // converter para JSON. Ao fazer um set, é necessário fazer o stringfy
     getLocalUser(): LocalUser{
+
         let user = localStorage.getItem(STORAGE_KEYS.localUser);
         if(user==null){
             return null;

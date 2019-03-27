@@ -3,6 +3,7 @@ import { NavController, IonicPage, MenuController } from 'ionic-angular';
 import { CollectionPage } from '../collection/collection'
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
+import { CollectionService } from '../../services/collection.service';
 
 @IonicPage()
 @Component({
@@ -18,7 +19,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
               public menu: MenuController,
-              public auth: AuthService) {
+              public auth: AuthService,
+              public collectionService: CollectionService) {
 
   }
 
@@ -34,9 +36,11 @@ export class HomePage {
   ionViewWillEnter() {
     this.menu.swipeEnable(false);
   }
+
   ionViewDidLeave() {
     console.log(this.creds);
     this.menu.swipeEnable(true);
+    this.collectionService.findUser();
   }
 
 }
