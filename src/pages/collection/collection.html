@@ -8,12 +8,22 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-grid>
-        <ion-row>
-            <ion-col width-33 *ngFor="let item of items">
-            <img src="{{bucketUrl}}/title{{item.id}}.jpg">
-            <p style="text-align: center"> {{item.name}} </p>
-            </ion-col>
-          </ion-row>
-      </ion-grid>
+      <ion-grid>
+        <div *ngFor="let item of items; let i = index;">
+            <ion-row *ngIf="i % 3 === 0">
+                <ion-col col-4 *ngIf="i < items.length">
+                  <img src="{{bucketUrl}}/title{{items[i].id}}.jpg">
+                  <p style="text-align: center"> {{items[i].name}} </p>
+                </ion-col>
+                <ion-col col-4 *ngIf="i+1 < items.length">
+                  <img src="{{bucketUrl}}/title{{items[i+1].id}}.jpg">
+                  <p style="text-align: center"> {{items[i+1].name}} </p>
+                </ion-col>
+                <ion-col col-4 *ngIf="i+2 < items.length">
+                  <img src="{{bucketUrl}}/title{{items[i+2].id}}.jpg">
+                  <p style="text-align: center"> {{items[i+2].name}} </p>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-grid>
 </ion-content>

@@ -4,9 +4,6 @@ import { CollectionService } from '../../services/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';
-import { UserDTO } from '../../models/user.dto';
-import { StorageService } from '../../services/storage.service';
-import { UserService } from '../../services/domain/user.service';
 
 @IonicPage()
 @Component({

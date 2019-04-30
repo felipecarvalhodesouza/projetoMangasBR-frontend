@@ -20,7 +20,7 @@ export class SignUpPage {
 
               this.formGroup = this.formBuilder.group({
                 name: ['Felipe Carvalho de Souza', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]], 
-                email: ['desouzafelipecarvalho@gmail.com', [Validators.required, Validators.email]]
+                email: ['felipinho22@gmail.com', [Validators.required, Validators.email]]
               });
   }
 
