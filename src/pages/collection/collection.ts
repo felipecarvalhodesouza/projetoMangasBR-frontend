@@ -32,4 +32,10 @@ export class CollectionPage {
       })
   }
 
+  enterTitlePage(obj: TitleDTO) {
+    this.navCtrl.push('TitlePage', {
+      title: obj
+    });
+  }
+
 }

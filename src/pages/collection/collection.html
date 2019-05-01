@@ -11,9 +11,9 @@
       <ion-grid>
         <div *ngFor="let item of items; let i = index;">
             <ion-row *ngIf="i % 3 === 0">
-                <ion-col col-4 *ngIf="i < items.length">
+                <ion-col col-4 (click)="enterTitlePage(items[i])" *ngIf="i < items.length">
                   <img src="{{bucketUrl}}/title{{items[i].id}}.jpg">
-                  <p style="text-align: center"> {{items[i].name}} </p>
+                  <p style="text-align: center"> {{items[i].name}} </p> s
                 </ion-col>
                 <ion-col col-4 *ngIf="i+1 < items.length">
                   <img src="{{bucketUrl}}/title{{items[i+1].id}}.jpg">
