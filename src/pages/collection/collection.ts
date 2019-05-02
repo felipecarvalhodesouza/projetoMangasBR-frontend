@@ -4,6 +4,7 @@ import { CollectionService } from '../../services/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class CollectionPage {
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
 
   items: TitleDTO[];
+  userId: number;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -25,16 +27,19 @@ export class CollectionPage {
     
     this.collectionService.findAll().subscribe(response => {
       this.items=response.titles;
-      console.log(this.items);
+      this.userId = response.id;
+      console.log(this.userId);
       },
       error => {
         console.log(error);
       })
   }
 
-  enterTitlePage(obj: TitleDTO) {
+  enterTitlePage(obj: TitleDTO, index: any) {
     this.navCtrl.push('TitlePage', {
-      title: obj
+      title: obj,
+      userId: this.userId,
+      titleIndex: index
     });
   }
 
