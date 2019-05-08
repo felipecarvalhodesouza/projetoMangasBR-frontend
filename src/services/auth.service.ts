@@ -5,6 +5,7 @@ import { API_CONFIG } from "../config/api.config";
 import { LocalUser } from "../models/local_user";
 import { StorageService } from "./storage.service";
 import { JwtHelper } from 'angular2-jwt';
+import { UserDTO } from "../models/user.dto";
 
 @Injectable()
 export class AuthService{
@@ -49,5 +50,16 @@ export class AuthService{
                 //evitar erro de parse de Json (o responsebody vem vazio)
                 responseType: 'text'
             });
-    } 
+    }
+
+    forgotPassword(obj: UserDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/forgot`,
+            obj,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
 }

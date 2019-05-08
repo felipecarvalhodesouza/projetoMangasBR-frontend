@@ -30,6 +30,12 @@ export class HomePage {
     this.auth.authenticate(this.creds)
     .subscribe(response => {
       this.auth.successfulLogin(response.headers.get('Authorization'));
+
+      this.collectionService.findUser(); // método para encontrar o usuário para carregar sua coleção
+      this.waitSeconds(500); // espera padrão para requisição assíncrona (erro de id)
+
+      this.menu.swipeEnable(true); // permite abrir o menu lateral ao sair da tela Home
+      
       this.navCtrl.setRoot('CollectionPage');
     },
     error => {});
@@ -41,13 +47,6 @@ export class HomePage {
 
   ionViewWillEnter() {
     this.menu.swipeEnable(false);
-  }
-
-  ionViewDidLeave() {
-    console.log(this.creds);
-    this.menu.swipeEnable(true);
-    this.collectionService.findUser();
-    this.waitSeconds(500);
   }
 
   ionViewDidEnter(){
@@ -69,6 +68,10 @@ export class HomePage {
         end = new Date().getTime();
         counter = end - start;
     }
+  }
+
+  forgotPassword(){
+    this.navCtrl.setRoot('ForgotPasswordPage');
   }
 
 }

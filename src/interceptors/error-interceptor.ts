@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { StorageService } from "../services/storage.service";
 import { AlertController, NavController } from "ionic-angular";
+import { FieldMessage } from "../models/fieldmessage";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor{
