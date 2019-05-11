@@ -53,4 +53,8 @@ export class ProfilePage {
     this.collectionService.findUser();
   }
 
+  changePassword(){
+    this.navCtrl.push('ChangePasswordPage');
+  }
+
 }

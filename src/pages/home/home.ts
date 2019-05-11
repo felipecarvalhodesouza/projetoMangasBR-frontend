@@ -34,7 +34,7 @@ export class HomePage {
       this.collectionService.findUser(); // método para encontrar o usuário para carregar sua coleção
       this.waitSeconds(500); // espera padrão para requisição assíncrona (erro de id)
 
-      this.menu.swipeEnable(true); // permite abrir o menu lateral ao sair da tela Home
+      this.menu.swipeEnable(true);
       
       this.navCtrl.setRoot('CollectionPage');
     },
@@ -47,6 +47,10 @@ export class HomePage {
 
   ionViewWillEnter() {
     this.menu.swipeEnable(false);
+  }
+
+  ionViewDidLeave(){
+    
   }
 
   ionViewDidEnter(){
@@ -71,7 +75,7 @@ export class HomePage {
   }
 
   forgotPassword(){
-    this.navCtrl.setRoot('ForgotPasswordPage');
+    this.navCtrl.push('ForgotPasswordPage');
   }
 
 }

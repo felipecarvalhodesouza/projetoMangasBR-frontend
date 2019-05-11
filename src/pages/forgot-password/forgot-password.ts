@@ -22,18 +22,10 @@ export class ForgotPasswordPage {
     this.formGroup = this.formBuilder.group({
       email: ['desouzafelipecarvalho@gmail.com', [Validators.required, Validators.email]]
     });
-    this.menu.swipeEnable(false);
-  }
-
-  ionViewWillEnter() {
-    this.menu.swipeEnable(false);
-  }
-
-  back(){
-    this.navCtrl.setRoot('HomePage');
   }
 
   sendNewPassword(){
+    console.log(this.formGroup.value);
     this.authService.forgotPassword(this.formGroup.value)
     .subscribe(response =>{
       this.showAlert();
@@ -50,7 +42,7 @@ export class ForgotPasswordPage {
         {
           text: 'Ok',
           handler: () => {
-            this.back();
+            this.navCtrl.pop();
           }
         }
       ]
