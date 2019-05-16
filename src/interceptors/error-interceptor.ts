@@ -50,7 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handle400(errorObj){
         let alert = this.alertCtrl.create({
-            title: 'Erro 400: validação',
+            title: 'Validação',
             message: this.listErrors(errorObj.errors),
             enableBackdropDismiss: false,
             buttons: [
@@ -64,8 +64,8 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handle401(){
         let alert = this.alertCtrl.create({
-             title: 'Erro 401: Falha de autenticação',
-             message: 'Email ou senha incorretos',
+             title: 'Falha de autenticação',
+             message: 'Dados incorretos',
              enableBackdropDismiss: false,
              buttons: [
                  {
@@ -82,7 +82,7 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handle422(errorObj){
         let alert = this.alertCtrl.create({
-            title: 'Erro 422: validação',
+            title: 'Validação',
             message: this.listErrors(errorObj.errors),
             enableBackdropDismiss: false,
             buttons: [
