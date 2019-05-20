@@ -34,4 +34,15 @@ export class UserService{
             }
         )
     }
+
+    update(obj: UserDTO){
+        return this.http.put(
+            `${API_CONFIG.baseUrl}/users/${obj.id}`,
+            obj,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
 }

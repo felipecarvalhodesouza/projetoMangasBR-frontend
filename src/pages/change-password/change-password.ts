@@ -5,6 +5,9 @@ import { PasswordCheckService } from '../../services/password.check.service';
 import { AuthService } from '../../services/auth.service';
 import { StorageService } from '../../services/storage.service';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { UserService } from '../../services/domain/user.service';
+import { UserDTO } from '../../models/user.dto';
+import { Observable } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -20,12 +23,20 @@ export class ChangePasswordPage {
     senha: ""
   }
 
+  user: UserDTO = {
+    id: null,
+    email: null,
+    name: null,
+    senha: null
+    };
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public formBuilder: FormBuilder,
               public passwordCheckService: PasswordCheckService,
               public alertCtrl: AlertController,
               public auth: AuthService,
+              public userService: UserService,
               public storageService: StorageService) {
                 
       this.formGroup = this.formBuilder.group({
@@ -35,6 +46,15 @@ export class ChangePasswordPage {
     });
 
     this.creds.email = this.storageService.getLocalUser().email;
+
+    this.userService.findByEmail(this.creds.email)
+    .subscribe(response => {
+        this.waitSeconds(1000);
+        this.user.id = response.id;
+        this.user.name = response.name;
+        this.user.email = response.email;
+      },
+      error => {});
   }
 
   passwordStrenghtCheck(password: string) : string {
@@ -44,13 +64,17 @@ export class ChangePasswordPage {
 
   editPassword(){
     this.creds.senha = this.formGroup.value.oldPassword;
-    console.log(this.creds);
     this.auth.authenticate(this.creds)
     .subscribe(response => {
       if(this.formGroup.value.newPassword!==this.formGroup.value.confirmNewPassword){
         this.showPasswordFailedAlert("Há informações conflitantes na requisição.");
       } else{
-          console.log("Implementar requisição para API de edição de User");
+          this.user.senha = this.formGroup.value.newPassword;
+          this.userService.update(this.user)
+        .subscribe(response =>{
+          this.showInsertOk();
+        },
+        error => {});
       }
     },
     error => {
@@ -74,6 +98,34 @@ export class ChangePasswordPage {
       ]
     });
     alert.present();
+  }
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Senha atualizada com sucesso',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            //desempilha a página
+            this.auth.logout();
+            this.navCtrl.setRoot('HomePage');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  waitSeconds(iMilliSeconds) {
+    var counter= 0
+        , start = new Date().getTime()
+        , end = 0;
+    while (counter < iMilliSeconds) {
+        end = new Date().getTime();
+        counter = end - start;
+    }
   }
 
 }
