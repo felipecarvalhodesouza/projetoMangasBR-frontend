@@ -27,7 +27,8 @@ export class ChangePasswordPage {
     id: null,
     email: null,
     name: null,
-    senha: null
+    senha: null,
+    changePasswordOnLogin: null
     };
 
   constructor(public navCtrl: NavController,
@@ -70,6 +71,8 @@ export class ChangePasswordPage {
         this.showPasswordFailedAlert("Há informações conflitantes na requisição.");
       } else{
           this.user.senha = this.formGroup.value.newPassword;
+          this.user.changePasswordOnLogin = false;
+          console.log(this.user);
           this.userService.update(this.user)
         .subscribe(response =>{
           this.showInsertOk();
@@ -78,7 +81,7 @@ export class ChangePasswordPage {
       }
     },
     error => {
-      this.navCtrl.pop();
+      this.return();
     });
   }
 
@@ -91,8 +94,7 @@ export class ChangePasswordPage {
         {
           text: 'Ok',
           handler: () => {
-            //desempilha a página
-            this.navCtrl.pop();
+            this.return();
           }
         }
       ]
@@ -108,9 +110,7 @@ export class ChangePasswordPage {
         {
           text: 'Ok',
           handler: () => {
-            //desempilha a página
-            this.auth.logout();
-            this.navCtrl.setRoot('HomePage');
+            this.return();
           }
         }
       ]
@@ -126,6 +126,11 @@ export class ChangePasswordPage {
         end = new Date().getTime();
         counter = end - start;
     }
+  }
+
+  return(){
+    this.auth.logout();
+    this.navCtrl.setRoot('HomePage');
   }
 
 }

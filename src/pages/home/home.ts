@@ -5,6 +5,8 @@ import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
 import { CollectionService } from '../../services/collection.service';
 import { StorageService } from '../../services/storage.service';
+import { UserService } from '../../services/domain/user.service';
+import { UserDTO } from '../../models/user.dto';
 
 @IonicPage()
 @Component({
@@ -18,10 +20,19 @@ export class HomePage {
     senha: ""
   }
 
+  user: UserDTO = {
+    id: null,
+    name: null,
+    senha: null,
+    email: null,
+    changePasswordOnLogin: null
+  }
+
   constructor(public navCtrl: NavController,
               public menu: MenuController,
               public auth: AuthService,
               public collectionService: CollectionService,
+              public userService: UserService,
               public storageService: StorageService) {
 
   }
@@ -31,12 +42,15 @@ export class HomePage {
     .subscribe(response => {
       this.auth.successfulLogin(response.headers.get('Authorization'));
 
-      this.collectionService.findUser(); // método para encontrar o usuário para carregar sua coleção
-      this.waitSeconds(500); // espera padrão para requisição assíncrona (erro de id)
+      this.user = this.collectionService.findUser(); // método para encontrar o usuário para carregar sua coleção
 
-      this.menu.swipeEnable(true);
-      
-      this.navCtrl.setRoot('CollectionPage');
+      if(this.user.changePasswordOnLogin===true){
+        this.navCtrl.setRoot('ChangePasswordPage');
+      }
+      else{
+        this.menu.swipeEnable(true);
+        this.navCtrl.setRoot('CollectionPage');
+      }
     },
     error => {});
   }
