@@ -15,6 +15,7 @@ import { UserService } from '../services/domain/user.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { TitleService } from '../services/title.service';
 import { PasswordCheckService } from '../services/password.check.service';
+import { CollectionPage } from '../pages/collection/collection';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { PasswordCheckService } from '../services/password.check.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

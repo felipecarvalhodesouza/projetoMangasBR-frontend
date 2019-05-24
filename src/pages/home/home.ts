@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { NavController, IonicPage, MenuController, LoadingController } from 'ionic-angular';
 import { CollectionPage } from '../collection/collection'
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
@@ -20,39 +20,33 @@ export class HomePage {
     senha: ""
   }
 
-  user: UserDTO = {
-    id: null,
-    name: null,
-    senha: null,
-    email: null,
-    changePasswordOnLogin: null
-  }
-
   constructor(public navCtrl: NavController,
               public menu: MenuController,
               public auth: AuthService,
               public collectionService: CollectionService,
               public userService: UserService,
-              public storageService: StorageService) {
+              public storageService: StorageService,
+              public loadingControl: LoadingController) {
 
   }
 
   login(){
+
+    let loader = this.presentLoading();
+
     this.auth.authenticate(this.creds)
     .subscribe(response => {
       this.auth.successfulLogin(response.headers.get('Authorization'));
 
-      this.user = this.collectionService.findUser(); // método para encontrar o usuário para carregar sua coleção
+      this.collectionService.findUser();
+      loader.dismiss();
 
-      if(this.user.changePasswordOnLogin===true){
-        this.navCtrl.setRoot('ChangePasswordPage');
-      }
-      else{
-        this.menu.swipeEnable(true);
-        this.navCtrl.setRoot('CollectionPage');
-      }
+      this.menu.swipeEnable(true);
+      this.navCtrl.setRoot('InfoPage');
     },
-    error => {});
+    error => {
+      loader.dismiss();
+    });
   }
 
   signup(){
@@ -78,18 +72,16 @@ export class HomePage {
     }
   }
 
-  waitSeconds(iMilliSeconds) {
-    var counter= 0
-        , start = new Date().getTime()
-        , end = 0;
-    while (counter < iMilliSeconds) {
-        end = new Date().getTime();
-        counter = end - start;
-    }
-  }
-
   forgotPassword(){
     this.navCtrl.push('ForgotPasswordPage');
+  }
+
+  presentLoading(){
+    let loader = this.loadingControl.create({
+      content: "Carregando"
+    });
+    loader.present();
+    return loader;
   }
 
 }

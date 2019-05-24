@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { CollectionService } from '../../services/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { UserDTO } from '../../models/user.dto';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,9 @@ export class CollectionPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public collectionService: CollectionService) {
+              public collectionService: CollectionService,
+              public menu: MenuController) {
+              this.verifyChangePassword(this.collectionService.returnUser());
   }
 
   ionViewDidLoad() {
@@ -41,6 +44,13 @@ export class CollectionPage {
       userId: this.userId,
       titleIndex: index
     });
+  }
+
+  verifyChangePassword(user: UserDTO){
+    if(user.changePasswordOnLogin===true){
+        this.menu.swipeEnable(false);
+        this.navCtrl.setRoot('ChangePasswordPage');
+    }
   }
 
 }

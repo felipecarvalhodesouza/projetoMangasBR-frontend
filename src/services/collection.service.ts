@@ -6,7 +6,7 @@ import { TitleDTO } from "../models/title.dto";
 import { UserService } from "./domain/user.service";
 import { UserDTO } from "../models/user.dto";
 import { StorageService } from "./storage.service";
-import { NavController, NavParams, LoadingController } from "ionic-angular";
+import { NavController, NavParams, LoadingController, MenuController } from "ionic-angular";
 
  // para ser um service que possa ser injetado em outras classes
 @Injectable()
@@ -18,7 +18,7 @@ export class CollectionService {
                 public userService: UserService,
                 public storage: StorageService,
                 public loadingControl: LoadingController){
-        this.findUser();
+                //this.findUser();
     }
 
     findAll() : Observable<any> {
@@ -27,14 +27,17 @@ export class CollectionService {
 
     findUser() : UserDTO{
         let localUser = this.storage.getLocalUser();
+        console.log(localUser); 
             if(localUser){
                 let loader = this.presentLoading();
                 this.userService.findByEmail(localUser.email)
                 .subscribe(response => {
                     this.user = response;
+                    console.log(this.user);
                     loader.dismiss();
                 },
                 error => {
+                    console.log("TESTE DE ERRO");
                     loader.dismiss();
                 });
             }
@@ -43,9 +46,13 @@ export class CollectionService {
 
     presentLoading(){
         let loader = this.loadingControl.create({
-          content: "Aguarde..."
+          content: "Carregando"
         });
         loader.present();
         return loader;
-      }
+    }
+
+    returnUser():UserDTO{
+        return this.user;
+    }
 }

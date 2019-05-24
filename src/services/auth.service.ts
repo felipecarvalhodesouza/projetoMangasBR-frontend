@@ -6,6 +6,7 @@ import { LocalUser } from "../models/local_user";
 import { StorageService } from "./storage.service";
 import { JwtHelper } from 'angular2-jwt';
 import { UserDTO } from "../models/user.dto";
+import { CollectionService } from "./collection.service";
 
 @Injectable()
 export class AuthService{
@@ -13,6 +14,7 @@ export class AuthService{
     jwtHelper: JwtHelper = new JwtHelper();
 
     constructor(public http: HttpClient,
+        public collectionService: CollectionService,
         public storage: StorageService){
 
     }
