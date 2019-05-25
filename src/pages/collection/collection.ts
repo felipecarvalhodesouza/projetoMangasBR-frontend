@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular';
 import { CollectionService } from '../../services/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
@@ -22,7 +22,8 @@ export class CollectionPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public collectionService: CollectionService,
-              public menu: MenuController) {
+              public menu: MenuController,
+              public alertCtrl: AlertController) {
               this.verifyChangePassword(this.collectionService.returnUser());
   }
 
@@ -48,9 +49,26 @@ export class CollectionPage {
 
   verifyChangePassword(user: UserDTO){
     if(user.changePasswordOnLogin===true){
-        this.menu.swipeEnable(false);
-        this.navCtrl.setRoot('ChangePasswordPage');
+      this.showAlert("Você deve mudar sua senha agora.");
     }
+  }
+
+  showAlert(message: string){
+    let alert = this.alertCtrl.create({
+      title: 'Aviso',
+      message: message,
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.menu.swipeEnable(false);
+            this.navCtrl.setRoot('ChangePasswordPage');
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

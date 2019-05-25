@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CollectionService } from '../../services/collection.service';
 
 
 @IonicPage()
@@ -10,7 +11,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class InfoPage {
 
   constructor(public navCtrl: NavController,
-              public navParams: NavParams) {
+              public navParams: NavParams,
+              public collectionService: CollectionService) {
+      if(this.collectionService.user==null){
+        this.collectionService.findUser();
+      }
   }
 
   goToCollection(){

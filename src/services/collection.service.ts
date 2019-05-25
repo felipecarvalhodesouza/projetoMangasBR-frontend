@@ -18,7 +18,6 @@ export class CollectionService {
                 public userService: UserService,
                 public storage: StorageService,
                 public loadingControl: LoadingController){
-                //this.findUser();
     }
 
     findAll() : Observable<any> {
@@ -27,17 +26,14 @@ export class CollectionService {
 
     findUser() : UserDTO{
         let localUser = this.storage.getLocalUser();
-        console.log(localUser); 
             if(localUser){
                 let loader = this.presentLoading();
                 this.userService.findByEmail(localUser.email)
                 .subscribe(response => {
                     this.user = response;
-                    console.log(this.user);
                     loader.dismiss();
                 },
                 error => {
-                    console.log("TESTE DE ERRO");
                     loader.dismiss();
                 });
             }

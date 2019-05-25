@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Reenviar token</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+    <form [formGroup]="formGroup" (ngSubmit)="sendNewToken(); $event.preventDefault()">
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input formControlName="email" type="text"></ion-input>
+      </ion-item>
+      <p *ngIf="formGroup.controls['email'].dirty && formGroup.controls['email'].errors" margin-left>Valor inválido</p>
+      <button ion-button block type="submit" [disabled]="formGroup.invalid">Reenviar token</button>
+    </form>
+  </ion-content>
+  

@@ -66,7 +66,7 @@ export class HomePage {
       this.auth.refreshToken()
       .subscribe(response => {
         this.auth.successfulLogin(response.headers.get('Authorization'));
-        this.navCtrl.setRoot('CollectionPage');
+        this.navCtrl.setRoot('InfoPage');
       },
       error => {});
     }
@@ -82,6 +82,10 @@ export class HomePage {
     });
     loader.present();
     return loader;
+  }
+
+  resendToken(){
+    this.navCtrl.push('ResendTokenPage');
   }
 
 }

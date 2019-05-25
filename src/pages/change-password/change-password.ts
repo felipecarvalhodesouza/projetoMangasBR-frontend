@@ -50,7 +50,6 @@ export class ChangePasswordPage {
 
     this.userService.findByEmail(this.creds.email)
     .subscribe(response => {
-        this.waitSeconds(1000);
         this.user.id = response.id;
         this.user.name = response.name;
         this.user.email = response.email;
@@ -68,16 +67,20 @@ export class ChangePasswordPage {
     .subscribe(response => {
       if(this.formGroup.value.newPassword!==this.formGroup.value.confirmNewPassword){
         this.showPasswordFailedAlert("Há informações conflitantes na requisição.");
-      } else{
-          this.user.senha = this.formGroup.value.newPassword;
-          this.user.changePasswordOnLogin = false;
-          console.log(this.user);
-          this.userService.update(this.user)
-        .subscribe(response =>{
-          this.showInsertOk();
-        },
-        error => {});
-      }
+      } else
+         if(this.formGroup.value.oldPassword===this.formGroup.value.newPassword){
+            this.showPasswordFailedAlert("A nova senha não pode ser igual à antiga.");
+        } else
+          {
+            this.user.senha = this.formGroup.value.newPassword;
+            this.user.changePasswordOnLogin = false;
+            console.log(this.user);
+            this.userService.update(this.user)
+          .subscribe(response =>{
+            this.showInsertOk();
+          },
+          error => {});
+        }
     },
     error => {
       this.return();
@@ -100,6 +103,7 @@ export class ChangePasswordPage {
     });
     alert.present();
   }
+  
   showInsertOk(){
     let alert = this.alertCtrl.create({
       title: 'Sucesso!',
@@ -115,16 +119,6 @@ export class ChangePasswordPage {
       ]
     });
     alert.present();
-  }
-
-  waitSeconds(iMilliSeconds) {
-    var counter= 0
-        , start = new Date().getTime()
-        , end = 0;
-    while (counter < iMilliSeconds) {
-        end = new Date().getTime();
-        counter = end - start;
-    }
   }
 
   return(){

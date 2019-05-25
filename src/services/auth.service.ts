@@ -64,4 +64,15 @@ export class AuthService{
             }
         )
     }
+
+    resendToken(obj: UserDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/resend_token`,
+            obj,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
 }
