@@ -18,6 +18,7 @@ export class CollectionPage {
 
   items: TitleDTO[];
   userId: number;
+  date: Date;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -35,7 +36,9 @@ export class CollectionPage {
       console.log(this.userId);
       },
       error => {
-        console.log(error);
+        if(error.status == 403){
+          this.navCtrl.setRoot('HomePage');
+        }
       })
   }
 

@@ -58,6 +58,7 @@ export class ChangePasswordPage {
   }
 
   passwordStrenghtCheck(password: string) : string {
+    console.log(this.passwordCheckService.checkPasswordStrength(password));
     return this.passwordCheckService.checkPasswordStrength(password);
   }
 

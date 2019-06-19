@@ -7,6 +7,7 @@ import { UserService } from "./domain/user.service";
 import { UserDTO } from "../models/user.dto";
 import { StorageService } from "./storage.service";
 import { NavController, NavParams, LoadingController, MenuController } from "ionic-angular";
+import { App } from "ionic-angular/components/app/app";
 
  // para ser um service que possa ser injetado em outras classes
 @Injectable()
@@ -17,7 +18,8 @@ export class CollectionService {
     constructor(public http: HttpClient,
                 public userService: UserService,
                 public storage: StorageService,
-                public loadingControl: LoadingController){
+                public loadingControl: LoadingController,
+                public app: App){
     }
 
     findAll() : Observable<any> {
@@ -35,6 +37,7 @@ export class CollectionService {
                 },
                 error => {
                     loader.dismiss();
+                    this.app.getActiveNav().setRoot('HomePage');
                 });
             }
         return this.user;
