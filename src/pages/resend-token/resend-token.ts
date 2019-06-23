@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,7 +17,8 @@ export class ResendTokenPage {
               public formBuilder: FormBuilder,
               public menu: MenuController,
               public authService: AuthService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public loadingControl: LoadingController) {
 
     this.formGroup = this.formBuilder.group({
       email: ['felipinho22@gmail.com', [Validators.required, Validators.email]]
@@ -25,11 +26,17 @@ export class ResendTokenPage {
   }
 
   sendNewToken(){
+
+    let loader = this.presentLoading();
+
     this.authService.resendToken(this.formGroup.value)
     .subscribe(response =>{
+      loader.dismiss();
       this.showAlert();
     },
-    error => {});
+    error => {
+      loader.dismiss();
+    });
   }
 
   showAlert(){
@@ -47,6 +54,14 @@ export class ResendTokenPage {
       ]
     });
     alert.present();
+  }
+
+  presentLoading(){
+    let loader = this.loadingControl.create({
+      content: "Carregando"
+    });
+    loader.present();
+    return loader;
   }
 
 }

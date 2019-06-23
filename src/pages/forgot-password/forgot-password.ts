@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, AlertController, LoadingController } from 'ionic-angular';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,7 +17,8 @@ export class ForgotPasswordPage {
               public formBuilder: FormBuilder,
               public menu: MenuController,
               public authService: AuthService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public loadingControl: LoadingController) {
 
     this.formGroup = this.formBuilder.group({
       email: ['desouzafelipecarvalho@gmail.com', [Validators.required, Validators.email]]
@@ -25,12 +26,18 @@ export class ForgotPasswordPage {
   }
 
   sendNewPassword(){
-    console.log(this.formGroup.value);
+    
+    let loader = this.presentLoading();
+
     this.authService.forgotPassword(this.formGroup.value)
     .subscribe(response =>{
+      loader.dismiss();
       this.showAlert();
     },
-    error => {});
+    error => {
+      this.showAlert();
+      loader.dismiss();
+    });
   }
 
   showAlert(){
@@ -48,6 +55,14 @@ export class ForgotPasswordPage {
       ]
     });
     alert.present();
+  }
+
+  presentLoading(){
+    let loader = this.loadingControl.create({
+      content: "Carregando"
+    });
+    loader.present();
+    return loader;
   }
 
 }
