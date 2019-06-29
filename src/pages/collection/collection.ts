@@ -90,24 +90,18 @@ export class CollectionPage {
   }
 
   setFilteredItems() {
-
-    //var results = this.items;
-
-    //var aux = this.itemsSearchBar
-    //aux = this.filteredItems(this.searchTerm.trim());
-
-    //results = this.filteredItems(this.searchTerm.trim());
-
-    //if(results.length != aux.length){
+      
+      var results = this.items.length;
 
       this.items = this.itemsSearchBar;
-
-      var loader = this.loadingService.initLoader();
+      
       this.items = this.filteredItems(this.searchTerm);
-      this.loadingService.dismissLoader(loader);
-  
-      this.focusButton();
-    //}
+
+      if(this.items.length != results){
+        var loader = this.loadingService.initLoader();
+        this.loadingService.dismissLoader(loader);
+        this.focusButton();
+      } 
   }
 
   focusButton(): void {
