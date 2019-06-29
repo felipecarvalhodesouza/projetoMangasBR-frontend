@@ -8,7 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-searchbar color="danger"></ion-searchbar>
+  <ion-searchbar #searchbar
+    color="danger" 
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+  >
+  </ion-searchbar>
+
   <ion-grid>
     <div *ngFor="let item of items; let i = index;">
       <ion-row *ngIf="i % 3 === 0">

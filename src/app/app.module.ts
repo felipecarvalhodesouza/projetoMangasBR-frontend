@@ -16,6 +16,7 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { TitleService } from '../services/title.service';
 import { PasswordCheckService } from '../services/password.check.service';
 import { CollectionPage } from '../pages/collection/collection';
+import { LoadingService } from '../services/loading.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CollectionPage } from '../pages/collection/collection';
     CollectionService,
     UserService,
     TitleService,
-    PasswordCheckService
+    PasswordCheckService,
+    LoadingService
   ]
 })
 export class AppModule {}
