@@ -32,12 +32,15 @@
         <div *ngFor="let volume of volumes; let i = index;">
           <ion-row *ngIf="i % 3 === 0">
             <ion-col col-4 *ngIf="i < volumes.length">
+              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg"> 
               <p style="text-align: center"> {{volumes[i].name}} </p>
            </ion-col>
             <ion-col col-4 *ngIf="i+1 < volumes.length">
+              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].id}}.jpg">
               <p style="text-align: center"> {{volumes[i+1].name}} </p>
             </ion-col>
             <ion-col col-4 *ngIf="i+2 < volumes.length">
+              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].id}}.jpg">
              <p style="text-align: center"> {{volumes[i+2].name}} </p>
             </ion-col>
           </ion-row>
