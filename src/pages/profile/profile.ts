@@ -5,6 +5,7 @@ import { UserDTO } from '../../models/user.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { UserService } from '../../services/domain/user.service';
 import { CollectionService } from '../../services/collection.service';
+import { DatePipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -14,12 +15,15 @@ import { CollectionService } from '../../services/collection.service';
 export class ProfilePage {
 
   user: UserDTO;
+  segments: String;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public storage: StorageService,
               public userService: UserService,
-              public collectionService: CollectionService) {
+              public collectionService: CollectionService,
+              public datepipe: DatePipe) {
+              this.segments = "data";
   }
 
   ionViewDidLoad() {
@@ -29,6 +33,7 @@ export class ProfilePage {
         .subscribe(response => {
           this.user = response;
           this.getImageIfExists();
+          this.user.memberSince = this.datepipe.transform(this.user.memberSince, 'dd-MM-yyyy');
         },
         error => {
           if(error.status == 403){

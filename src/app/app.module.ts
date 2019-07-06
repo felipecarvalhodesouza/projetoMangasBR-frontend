@@ -17,6 +17,7 @@ import { TitleService } from '../services/title.service';
 import { PasswordCheckService } from '../services/password.check.service';
 import { CollectionPage } from '../pages/collection/collection';
 import { LoadingService } from '../services/loading.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LoadingService } from '../services/loading.service';
     UserService,
     TitleService,
     PasswordCheckService,
-    LoadingService
+    LoadingService,
+    DatePipe
   ]
 })
 export class AppModule {}

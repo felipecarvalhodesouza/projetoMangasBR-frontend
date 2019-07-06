@@ -7,11 +7,60 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-avatar>
-    <img class="circle" [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'">
-  </ion-avatar>
-  <h2 text-center>{{user?.name}}</h2>
-  <p text-center>{{user?.email}}</p>
-  <button ion-button block (click)="changePassword()">Trocar Senha</button>
-</ion-content>
+<ion-content>
+
+    <div class="user-photo" padding-top>
+        <ion-avatar>
+          <img [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'">
+        </ion-avatar>
+        <ion-label style="text-align: center">
+            <p style="color:gray">Trocar imagem de perfil</p>
+        </ion-label>
+      </div>
+
+    <div padding>
+        <ion-segment [(ngModel)]="segments">
+          <ion-segment-button value="data">
+            Dados cadastrais
+          </ion-segment-button>
+          <ion-segment-button value="stats">
+            Coleção
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+    <div [ngSwitch]="segments">
+    <ion-list *ngSwitchCase="'data'">
+      <ion-item>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-label>
+          <p>Display Name</p>
+          <h2>{{user?.name}}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-label>
+          <p>Email</p>
+          <h2>{{user?.email}}</h2>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+          <ion-icon name="memberSince" slot="start"></ion-icon>
+          <ion-label>
+            <p>Membro desde</p>
+            <h2>{{user?.memberSince}}</h2>
+          </ion-label>
+        </ion-item>
+        <div style="text-align: center">
+            <button class="button" ion-button (click)="changeData()">Editar dados</button>
+            <button class="button" ion-button (click)="changePassword()">Trocar senha</button>
+        </div>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'stats'">
+
+    </ion-list>
+  </div>
+  </ion-content>
+

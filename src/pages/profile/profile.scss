@@ -1,8 +1,26 @@
 page-profile {
     
-    .circle{
-        width: 60%;
+    .user-photo ion-avatar {
+        margin: 0 auto;
+        width: 120px;
+        height: 120px;
         border-radius: 100%;
-        margin: 25px auto 0 auto;
+    }
+    
+    ion-list {
+      margin-top: 24px;
+      p {
+        font-size: 12px;
+        font-weight: 400;
+        padding-bottom: 4px;
+      };
+      h2 {
+        font-weight: 400;
+      }
+    }
+
+    .button {
+      margin-left: 2.5%;
+      margin-right: 2.5%
     }
 }
