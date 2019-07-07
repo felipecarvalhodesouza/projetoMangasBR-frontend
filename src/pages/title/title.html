@@ -12,39 +12,61 @@
     <ion-grid>
         <ion-row>
           <ion-col col-4>
-              <img src="{{bucketUrl}}/title{{title.id}}.jpg">
+              <img src="{{bucketUrl}}/title{{title.id}}.jpg" style="border: black">
           </ion-col>
-          <ion-col>
-              <ion-item>
-                  <ion-label>Score:</ion-label>
-                </ion-item>
-              <ion-item>
-                  <ion-label>Status:</ion-label>
-              </ion-item>
-              <ion-item>
-                  <ion-label>Volumes:</ion-label>
-              </ion-item>
+          <ion-col style="padding-left: 15px; padding-top: 3"> 
+                  <ion-label style="margin-top:5px">Editora:</ion-label>
+                  <ion-label>Status: {{status}}</ion-label>
+                  <ion-label>Volumes: {{totalElements}}</ion-label>
+                  <ion-label>Início:</ion-label>
+                  <ion-label>Fim:</ion-label>
           </ion-col>
         </ion-row>
     </ion-grid>
 
-    <ion-grid>
-        <div *ngFor="let volume of volumes; let i = index;">
-          <ion-row *ngIf="i % 3 === 0">
-            <ion-col col-4 *ngIf="i < volumes.length">
-              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg"> 
-              <p style="text-align: center"> {{volumes[i].name}} </p>
-           </ion-col>
-            <ion-col col-4 *ngIf="i+1 < volumes.length">
-              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].id}}.jpg">
-              <p style="text-align: center"> {{volumes[i+1].name}} </p>
+    <div padding style="padding: 0">
+      <ion-segment [(ngModel)]="segments">
+        <ion-segment-button value="volumes">
+          Volumes
+        </ion-segment-button>
+        <ion-segment-button value="sinopse">
+          Sinopse
+        </ion-segment-button>
+        <ion-segment-button value="reviews">
+          Reviews
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    
+    <div [ngSwitch]="segments">
+      <ion-grid *ngSwitchCase="'volumes'">
+          <div *ngFor="let volume of volumes; let i = index;">
+            <ion-row *ngIf="i % 3 === 0">
+              <ion-col col-4 *ngIf="i < volumes.length">
+                <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+                <p style="text-align: center"> {{volumes[i].name}} </p>
             </ion-col>
-            <ion-col col-4 *ngIf="i+2 < volumes.length">
-              <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].id}}.jpg">
-             <p style="text-align: center"> {{volumes[i+2].name}} </p>
-            </ion-col>
-          </ion-row>
-        </div>
+              <ion-col col-4 *ngIf="i+1 < volumes.length">
+                <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+                <p style="text-align: center"> {{volumes[i+1].name}} </p>
+              </ion-col>
+              <ion-col col-4 *ngIf="i+2 < volumes.length">
+                <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+              <p style="text-align: center"> {{volumes[i+2].name}} </p>
+              </ion-col>
+            </ion-row>
+          </div>
+          <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
       </ion-grid>
+
+      <ion-list *ngSwitchCase="'sinopse'">
+
+      </ion-list>
+      <ion-list *ngSwitchCase="'reviews'">
+
+      </ion-list>
+    </div>
 
 </ion-content>

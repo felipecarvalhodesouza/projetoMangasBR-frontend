@@ -28,7 +28,8 @@ export class ChangePasswordPage {
     email: null,
     name: null,
     senha: null,
-    changePasswordOnLogin: null
+    changePasswordOnLogin: null,
+    memberSince: null
     };
 
   constructor(public navCtrl: NavController,

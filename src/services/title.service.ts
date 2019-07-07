@@ -10,12 +10,12 @@ export class TitleService {
 
     user: UserDTO;
 
-    constructor(public http: HttpClient){
+    constructor(public http: HttpClient){   
              
     }
 
-    findTitleVolumes(userId: number, titleIndex: number) : Observable<any> {
-        return this.http.get<any>(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}`); 
+    findTitleVolumes(userId: number, titleIndex: number, page: number=0, linesPerPage: number=9){
+        return this.http.get(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}?page=${page}&linesPerPage=${linesPerPage}`); 
     }
 
 }
