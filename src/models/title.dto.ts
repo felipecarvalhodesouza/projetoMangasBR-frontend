@@ -3,4 +3,5 @@ export interface TitleDTO {
     name: string;
     score: number;
     finished: boolean;
+    publisher: any
 } 

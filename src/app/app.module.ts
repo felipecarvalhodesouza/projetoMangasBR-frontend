@@ -15,13 +15,14 @@ import { UserService } from '../services/domain/user.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { TitleService } from '../services/title.service';
 import { PasswordCheckService } from '../services/password.check.service';
-import { CollectionPage } from '../pages/collection/collection';
 import { LoadingService } from '../services/loading.service';
 import { DatePipe } from '@angular/common';
+import { InsertReviewPage } from '../pages/insert-review/insert-review';
 
 @NgModule({
   declarations: [
-    MyApp
+    MyApp,
+    InsertReviewPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,8 @@ import { DatePipe } from '@angular/common';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp
+    MyApp,
+    InsertReviewPage
   ],
   providers: [
     StatusBar,

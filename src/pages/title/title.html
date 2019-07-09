@@ -15,7 +15,7 @@
               <img src="{{bucketUrl}}/title{{title.id}}.jpg" style="border: black">
           </ion-col>
           <ion-col style="padding-left: 15px; padding-top: 3"> 
-                  <ion-label style="margin-top:5px">Editora:</ion-label>
+                  <ion-label style="margin-top:5px">Editora: {{title.publisher.name}}</ion-label>
                   <ion-label>Status: {{status}}</ion-label>
                   <ion-label>Volumes: {{totalElements}}</ion-label>
                   <ion-label>Início:</ion-label>
@@ -65,7 +65,38 @@
 
       </ion-list>
       <ion-list *ngSwitchCase="'reviews'">
-
+        <div *ngFor="let review of reviews" style="margin: 15px">
+          <ion-grid>
+          <ion-row *ngIf="review.id%2!=0" style="align-items: center" >
+            <ion-col>
+                <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+            </ion-col>
+            <ion-col col-10>
+                <div class="speech-bubble-left">
+                    <ion-badge color="secondary" style="float:right; padding: 5px">{{review.score}}</ion-badge>
+                    <ion-label class="speech-bubble-left-text" text-wrap>{{review.text}}</ion-label>
+                    <ion-label class="speech-bubble-left-text" style="font: bold" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
+                  </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="review.id%2==0" style="align-items: center" >
+              <ion-col col-10>
+                  <div class="speech-bubble-right">
+                      <ion-badge color="primary" style="float:right; margin: 5px">{{review.score}}</ion-badge>
+                      <ion-label class="speech-bubble-right-text" text-wrap>{{review.text}}</ion-label>
+                      <ion-label class="speech-bubble-right-text" style="font: bold; padding-bottom: 5px" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
+                    </div>
+              </ion-col>
+              <ion-col>
+                  <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <ion-fab>
+            <button ion-fab (click)="presentModal()" vertical="bottom" horizontal="end"
+            activated="true">Button</button>
+          </ion-fab>
       </ion-list>
     </div>
 

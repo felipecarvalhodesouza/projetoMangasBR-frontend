@@ -8,8 +8,6 @@ import { UserDTO } from "../models/user.dto";
 @Injectable()
 export class TitleService {
 
-    user: UserDTO;
-
     constructor(public http: HttpClient){   
              
     }
@@ -18,4 +16,7 @@ export class TitleService {
         return this.http.get(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}?page=${page}&linesPerPage=${linesPerPage}`); 
     }
 
+    findReviews(titleIndex: number){
+        return this.http.get(`${API_CONFIG.baseUrl}/titles/${titleIndex}/reviews`);
+    }
 }
