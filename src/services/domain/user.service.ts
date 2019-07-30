@@ -45,4 +45,8 @@ export class UserService{
             }
         )
     }
+
+    getAccesses(id: number): Observable<UserDTO>{
+       return this.http.get<UserDTO>(`${API_CONFIG.baseUrl}/users/${id}`);
+    }
 }

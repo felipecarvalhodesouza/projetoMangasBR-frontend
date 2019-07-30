@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ModalController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { TitleDTO } from '../../models/title.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { TitleService } from '../../services/title.service';
@@ -26,6 +26,7 @@ export class TitlePage {
   status: string;
   reviews: ReviewDTO[];
   page: number = 0;
+  admin = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -43,12 +44,15 @@ export class TitlePage {
           this.status = "Completo";
         } else {
           this.status = "Em andamento";
-        }        
+        }
+       
     this.findReviews();
   }
 
   ionViewDidLoad() {
     let loader = this.presentLoading();
+
+    this.isAdmin(); 
 
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
@@ -73,7 +77,7 @@ export class TitlePage {
     });
   }
 
-  doInfinite(infiniteScroll){ 
+  doInfinite(infiniteScroll: { complete: () => void; }){ 
     this.page++;
     this.loadData();
     setTimeout(() =>{
@@ -110,5 +114,16 @@ export class TitlePage {
   presentModal() {
     const modal = this.modalCtrl.create(InsertReviewPage, { user: this.userService, title: this.title });
     modal.present();
+  }
+
+  isAdmin(){
+    this.admin = false;
+    this.userService.getAccesses(this.userId).
+    subscribe(response =>{
+      for(var i = 0; i < response.perfis.length; i++){
+        if(response.perfis[i]=="ADMIN")
+          this.admin = true;
+        }
+      });
   }
 }

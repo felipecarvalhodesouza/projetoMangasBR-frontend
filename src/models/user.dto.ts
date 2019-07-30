@@ -5,6 +5,7 @@ export interface UserDTO{
     senha: string;
     memberSince: any
     changePasswordOnLogin: boolean;
+    perfis: string[];
     //atributo opcional
     imageUrl? : string;
 }

@@ -73,7 +73,7 @@
             </ion-col>
             <ion-col col-10>
                 <div class="speech-bubble-left">
-                    <ion-badge color="secondary" style="float:right; padding: 5px">{{review.score}}</ion-badge>
+                    <ion-badge style="float:right; padding: 5px; color:white">{{review.score}}</ion-badge>
                     <ion-label class="speech-bubble-left-text" text-wrap>{{review.text}}</ion-label>
                     <ion-label class="speech-bubble-left-text" style="font: bold" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
                   </div>
@@ -82,7 +82,7 @@
           <ion-row *ngIf="review.id%2==0" style="align-items: center" >
               <ion-col col-10>
                   <div class="speech-bubble-right">
-                      <ion-badge color="primary" style="float:right; margin: 5px">{{review.score}}</ion-badge>
+                      <ion-badge style="float:right; margin: 5px; color:white">{{review.score}}</ion-badge>
                       <ion-label class="speech-bubble-right-text" text-wrap>{{review.text}}</ion-label>
                       <ion-label class="speech-bubble-right-text" style="font: bold; padding-bottom: 5px" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
                     </div>
@@ -93,11 +93,15 @@
             </ion-row>
           </ion-grid>
         </div>
-        <ion-fab>
-            <button ion-fab (click)="presentModal()" vertical="bottom" horizontal="end"
-            activated="true">Button</button>
-          </ion-fab>
       </ion-list>
     </div>
-
+    <ion-fab right bottom>
+      <button ion-fab color="light"><ion-icon name="arrow-dropleft"></ion-icon></button>
+      <ion-fab-list side="left">
+        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
+        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
+        <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+      </ion-fab-list>
+    </ion-fab>
 </ion-content>

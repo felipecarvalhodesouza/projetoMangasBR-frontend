@@ -7,7 +7,6 @@ import { StorageService } from '../../services/storage.service';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { UserService } from '../../services/domain/user.service';
 import { UserDTO } from '../../models/user.dto';
-import { Observable } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -29,7 +28,8 @@ export class ChangePasswordPage {
     name: null,
     senha: null,
     changePasswordOnLogin: null,
-    memberSince: null
+    memberSince: null,
+    perfis: null
     };
 
   constructor(public navCtrl: NavController,
