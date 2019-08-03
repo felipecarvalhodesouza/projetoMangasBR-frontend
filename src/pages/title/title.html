@@ -18,8 +18,8 @@
                   <ion-label style="margin-top:5px">Editora: {{title.publisher.name}}</ion-label>
                   <ion-label>Status: {{status}}</ion-label>
                   <ion-label>Volumes: {{totalElements}}</ion-label>
-                  <ion-label>Início:</ion-label>
-                  <ion-label>Fim:</ion-label>
+                  <ion-label>Início: {{title.start}}</ion-label>
+                  <ion-label>Fim: {{title.end}}</ion-label>
           </ion-col>
         </ion-row>
     </ion-grid>
@@ -61,8 +61,10 @@
           </ion-infinite-scroll>
       </ion-grid>
 
-      <ion-list *ngSwitchCase="'sinopse'">
-
+      <ion-list *ngSwitchCase="'sinopse'" style="padding: 3px;">
+        <div *ngFor="let sinopse of synopsis; let i = index;" id="synopsisFont">
+          {{synopsis[i]}}
+        </div>
       </ion-list>
       <ion-list *ngSwitchCase="'reviews'">
         <div *ngFor="let review of reviews" style="margin: 15px">
@@ -96,12 +98,10 @@
       </ion-list>
     </div>
     <ion-fab right bottom>
-      <button ion-fab color="light"><ion-icon name="arrow-dropleft"></ion-icon></button>
+      <button ion-fab><ion-icon  name="md-create"></ion-icon></button>
       <ion-fab-list side="left">
-        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
-        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
-        <button *ngIf="admin==true" ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
-        <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+        <button ion-fab (click)="presentModal()"><ion-icon name="md-chatboxes"></ion-icon></button>
+        <button *ngIf="admin==true" ion-fab><ion-icon name="md-document"></ion-icon></button>
       </ion-fab-list>
     </ion-fab>
 </ion-content>

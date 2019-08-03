@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
 import { TitleDTO } from '../../models/title.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { TitleService } from '../../services/title.service';
@@ -27,6 +27,7 @@ export class TitlePage {
   reviews: ReviewDTO[];
   page: number = 0;
   admin = false;
+  synopsis: String[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,16 +36,21 @@ export class TitlePage {
     public userService: UserService,
     public datePipe: DatePipe,
     public modalCtrl: ModalController,
-    public storageService: StorageService) {
+    public storageService: StorageService,
+    public alertCtrl: AlertController,
+    public datepipe: DatePipe) {
         this.titleIndex = this.navParams.get('titleIndex')+1;
         this.segments = "volumes";
         this.title = this.navParams.get('title');
+        this.breakLines();
         this.userId = this.navParams.get('userId');
         if(this.title.finished){
           this.status = "Completo";
         } else {
           this.status = "Em andamento";
         }
+        this.title.start = this.datepipe.transform(this.title.start, 'MM/yyyy');
+        this.title.end = this.datepipe.transform(this.title.end, 'MM/yyyy');
        
     this.findReviews();
   }
@@ -112,8 +118,13 @@ export class TitlePage {
   }
 
   presentModal() {
-    const modal = this.modalCtrl.create(InsertReviewPage, { user: this.userService, title: this.title });
-    modal.present();
+    if(!this.verifyIfThereIsReviewFromUser){
+      const modal = this.modalCtrl.create(InsertReviewPage, { user: this.userService, title: this.title });
+      modal.present();
+    }
+    else{
+      this.showError();
+    }
   }
 
   isAdmin(){
@@ -125,5 +136,34 @@ export class TitlePage {
           this.admin = true;
         }
       });
+  }
+
+  breakLines(){
+    this.synopsis = this.title.synopsis.split("\n");
+  }
+
+  verifyIfThereIsReviewFromUser(): boolean{
+    for(var i = 0; i < this.reviews.length; i++){
+      if(this.reviews[i].author.id == this.userId.toString()){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  showError(){
+    let alert = this.alertCtrl.create({
+      title: 'Erro!',
+      message: 'Você já possue uma review nesse título',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

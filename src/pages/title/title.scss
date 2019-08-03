@@ -64,4 +64,22 @@ page-title {
         border-radius: 50%;
         padding-left: 0;
       }
+
+    #synopsisFont {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-size: 15px;
+        letter-spacing: 1.4px;
+        word-spacing: -2px;
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none solid rgb(68, 68, 68);
+        font-style: normal;
+        font-variant: normal;
+        text-transform: none;
+        text-align: justify;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        text-indent: 25px;
+    }
 }

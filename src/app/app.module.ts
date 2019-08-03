@@ -18,6 +18,7 @@ import { PasswordCheckService } from '../services/password.check.service';
 import { LoadingService } from '../services/loading.service';
 import { DatePipe } from '@angular/common';
 import { InsertReviewPage } from '../pages/insert-review/insert-review';
+import { ImageUtilService } from '../services/image-util.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { InsertReviewPage } from '../pages/insert-review/insert-review';
     TitleService,
     PasswordCheckService,
     LoadingService,
-    DatePipe
+    DatePipe,
+    ImageUtilService
   ]
 })
 export class AppModule {}

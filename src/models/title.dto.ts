@@ -4,4 +4,7 @@ export interface TitleDTO {
     score: number;
     finished: boolean;
     publisher: any
+    synopsis: string;
+    start: string;
+    end: string;
 } 
