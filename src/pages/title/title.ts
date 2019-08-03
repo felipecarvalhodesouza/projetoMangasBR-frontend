@@ -49,10 +49,13 @@ export class TitlePage {
         } else {
           this.status = "Em andamento";
         }
-        this.title.start = this.datepipe.transform(this.title.start, 'MM/yyyy');
-        this.title.end = this.datepipe.transform(this.title.end, 'MM/yyyy');
-       
-    this.findReviews();
+        if(this.title.start!=null && this.title.start.length!=7){
+          this.title.start = this.datepipe.transform(this.title.start, 'MM/yyyy');
+        }
+        if(this.title.end!=null && this.title.end.length!=7){
+          this.title.end = this.datepipe.transform(this.title.end, 'MM/yyyy');
+        }
+        this.findReviews();
   }
 
   ionViewDidLoad() {
@@ -118,7 +121,7 @@ export class TitlePage {
   }
 
   presentModal() {
-    if(!this.verifyIfThereIsReviewFromUser){
+    if(!this.verifyIfThereIsReviewFromUser()){
       const modal = this.modalCtrl.create(InsertReviewPage, { user: this.userService, title: this.title });
       modal.present();
     }
@@ -139,7 +142,9 @@ export class TitlePage {
   }
 
   breakLines(){
-    this.synopsis = this.title.synopsis.split("\n");
+    if(this.title.synopsis!=null){
+      this.synopsis = this.title.synopsis.split("\n");
+    }
   }
 
   verifyIfThereIsReviewFromUser(): boolean{
