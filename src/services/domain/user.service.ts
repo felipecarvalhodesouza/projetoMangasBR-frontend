@@ -20,6 +20,10 @@ export class UserService{
         return this.http.get<UserDTO>(`${API_CONFIG.baseUrl}/users/email?value=${email}`);
     }
 
+    findById(id: number): Observable<UserDTO>{
+        return this.http.get<UserDTO>(`${API_CONFIG.baseUrl}/users/${id}`);
+    }
+
     getImageFromBucket(id: string) : Observable<any> {
         let url = `${API_CONFIG.bucketBaseUrl}/user-profile${id}.jpg`
         //blob quer dizer que a resposta será uma imagem e não um json

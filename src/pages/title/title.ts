@@ -122,7 +122,7 @@ export class TitlePage {
 
   presentModal() {
     if(!this.verifyIfThereIsReviewFromUser()){
-      const modal = this.modalCtrl.create(InsertReviewPage, { user: this.userService, title: this.title });
+      const modal = this.modalCtrl.create(InsertReviewPage, { userId: this.userId, title: this.title });
       modal.present();
     }
     else{

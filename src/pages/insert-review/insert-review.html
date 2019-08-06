@@ -8,5 +8,18 @@
   </ion-header>
 
 <ion-content padding>
-
+  <form [formGroup]="formGroup" (ngSubmit)="insertReview(); $event.preventDefault()">
+    <ion-item>
+      <ion-label stacked>O que achou da obra?</ion-label>
+      <ion-input formControlName="reviewText" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Score</ion-label>
+        <ion-range formControlName="score" min="0" max="10" pin="true" color="secondary">
+          <ion-label range-left>0</ion-label>
+          <ion-label range-right>10</ion-label>
+        </ion-range>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Confirmar</button>
+  </form>
 </ion-content>
