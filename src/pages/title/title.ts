@@ -8,6 +8,7 @@ import { UserService } from '../../services/domain/user.service';
 import { DatePipe } from '@angular/common';
 import { InsertReviewPage } from '../insert-review/insert-review';
 import { StorageService } from '../../services/storage.service';
+import { ReviewService } from '../../services/domain/review.service';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,8 @@ export class TitlePage {
     public modalCtrl: ModalController,
     public storageService: StorageService,
     public alertCtrl: AlertController,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe,
+    public reviewService: ReviewService) {
         this.titleIndex = this.navParams.get('titleIndex')+1;
         this.segments = "volumes";
         this.title = this.navParams.get('title');
@@ -116,7 +118,8 @@ export class TitlePage {
       this.userService.getImageFromBucket(element.author.id).subscribe(
         response => {
           element.imageUrl = `${API_CONFIG.bucketBaseUrl}/user-profile${element.author.id}.jpg`;
-      });
+      },
+      error => {});
     })
   }
 
@@ -171,4 +174,46 @@ export class TitlePage {
     });
     alert.present();
   }
+
+  deleteReview(review:ReviewDTO){
+    this.showConfirm(review);
+  }
+
+  showConfirm(review:ReviewDTO) {
+
+    if(review.author.id==this.userId.toString()){
+      const confirm = this.alertCtrl.create({
+        title: 'Apagar review?',
+        message: 'Você tem certeza que deseja apagar a sua review desse título?',
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              this.reviewService.delete(review, this.userId, this.title.id).subscribe(response =>{
+                this.findReviews();
+              },
+              error =>{
+                console.log(error);
+              });
+            }
+          },
+          {
+            text: 'Não',
+            handler: () => {
+              
+            }
+          }
+        ]
+      });
+      confirm.present();
+    }
+  }
+
+  verifyIndexOfReview(review:ReviewDTO){
+    if(this.reviews!=null){
+      return this.reviews.indexOf(review);
+    }
+    return;
+  }
+
 }

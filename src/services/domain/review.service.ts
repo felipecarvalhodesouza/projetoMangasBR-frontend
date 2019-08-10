@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { API_CONFIG } from "../../config/api.config";
 import { ReviewDTO } from "../../models/review.dto";
-import { RequestOptions } from "@angular/http";
 
 @Injectable()
 export class ReviewService{
@@ -23,7 +22,10 @@ export class ReviewService{
     }
 
 
-    delete(obj: ReviewDTO, titleId: string){
+    delete(obj: ReviewDTO, userId: number, titleId: string){
+
+        obj.date = null;
+        obj.author.perfis = null;
 
         const options = {
             headers: new HttpHeaders({
@@ -33,6 +35,6 @@ export class ReviewService{
         };
       
         return this.http.delete(
-            `${API_CONFIG.baseUrl}/titles/${titleId}/reviews`, options)
+            `${API_CONFIG.baseUrl}/users/${userId}/collection/${titleId}/reviews`, options)
     }
 }

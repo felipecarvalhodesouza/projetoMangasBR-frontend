@@ -69,21 +69,21 @@
       <ion-list *ngSwitchCase="'reviews'">
         <div *ngFor="let review of reviews" style="margin: 15px">
           <ion-grid>
-          <ion-row *ngIf="review.id%2!=0" style="align-items: center" >
+          <ion-row *ngIf="verifyIndexOfReview(review)%2!=0" style="align-items: center" >
             <ion-col>
                 <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
             </ion-col>
             <ion-col col-10>
-                <div class="speech-bubble-left">
+                <div class="speech-bubble-left" (press)="deleteReview(review)">
                     <ion-badge style="float:right; padding: 5px; color:white">{{review.score}}</ion-badge>
                     <ion-label class="speech-bubble-left-text" text-wrap>{{review.text}}</ion-label>
                     <ion-label class="speech-bubble-left-text" style="font: bold" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
                   </div>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="review.id%2==0" style="align-items: center" >
+          <ion-row *ngIf="verifyIndexOfReview(review)%2==0" style="align-items: center" >
               <ion-col col-10>
-                  <div class="speech-bubble-right">
+                  <div class="speech-bubble-right" (press)="deleteReview(review)">
                       <ion-badge style="float:right; margin: 5px; color:white">{{review.score}}</ion-badge>
                       <ion-label class="speech-bubble-right-text" text-wrap>{{review.text}}</ion-label>
                       <ion-label class="speech-bubble-right-text" style="font: bold; padding-bottom: 5px" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController, LoadingController } from 'ionic-angular';
 import { TitleDTO } from '../../models/title.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReviewDTO } from '../../models/review.dto';
@@ -38,7 +38,8 @@ export class InsertReviewPage {
               public formBuilder: FormBuilder,
               public userService: UserService,
               public reviewService: ReviewService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public loadingControl: LoadingController) {
 
     this.title = navParams.get("title");
     this.userId = navParams.get("userId");
@@ -55,16 +56,19 @@ export class InsertReviewPage {
 
   insertReview(){
 
+    let loader = this.presentLoading();
     this.userService.findById(this.userId).subscribe(response =>{
       this.review.author.id = response.id;
       this.review.authorName = response.name;
 
       this.populateReview();
-  
+
       this.reviewService.insert(this.review, this.title.id).subscribe(response =>{
+        loader.dismiss();
         this.dismiss();
       },
       error =>{
+        loader.dismiss();
         this.showAlert("Erro","Houve um problema na inserção da review.")
       });
     });
@@ -90,5 +94,13 @@ export class InsertReviewPage {
       ]
     });
     alert.present();
+  }
+
+  presentLoading(){
+    let loader = this.loadingControl.create({
+      content: "Aguarde..."
+    });
+    loader.present();
+    return loader;
   }
 }

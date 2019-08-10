@@ -18,12 +18,15 @@ export class ErrorInterceptor implements HttpInterceptor{
         .catch((error, caught) => {
 
             let errorObj = error;
-            if(errorObj.error){
-                errorObj = errorObj.error;
-            }
             if(!errorObj.status){
-                errorObj = JSON.parse(errorObj);
+                if(errorObj.error){
+                    errorObj = errorObj.error;
+                }
+                if(!errorObj.status){
+                    errorObj = JSON.parse(errorObj);
+                }
             }
+
             console.log("Erro detectado pelo Interceptor");
             console.log(errorObj);
 
@@ -37,6 +40,9 @@ export class ErrorInterceptor implements HttpInterceptor{
                 case 403: 
                     this.handle403();
                     break;
+                case 404:
+                    this.handle404();
+                    break
                 case 422:
                     this.handle422(errorObj);
                     break;
@@ -78,6 +84,10 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handle403(){
         this.storage.setLocalUser(null);
+    }
+
+    handle404(){
+
     }
 
     handle422(errorObj){
