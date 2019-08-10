@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
+import { TitleDTO } from "../models/title.dto";
 
- // para ser um service que possa ser injetado em outras classes
 @Injectable()
 export class TitleService {
 
@@ -16,5 +16,9 @@ export class TitleService {
 
     findReviews(titleIndex: number){
         return this.http.get(`${API_CONFIG.baseUrl}/titles/${titleIndex}/reviews`);
+    }
+
+    findTitles(){
+        return this.http.get<TitleDTO[]>(`${API_CONFIG.baseUrl}/titles`); 
     }
 }
