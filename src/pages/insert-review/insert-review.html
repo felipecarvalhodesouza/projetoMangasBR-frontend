@@ -11,7 +11,7 @@
   <form [formGroup]="formGroup" (ngSubmit)="insertReview(); $event.preventDefault()">
     <ion-item>
       <ion-label stacked>O que achou da obra?</ion-label>
-      <ion-input formControlName="reviewText" type="text"></ion-input>
+      <ion-textarea maxlength="150"  formControlName="reviewText" type="text"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label stacked>Score</ion-label>

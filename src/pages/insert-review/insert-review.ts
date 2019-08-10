@@ -65,6 +65,7 @@ export class InsertReviewPage {
 
       this.reviewService.insert(this.review, this.title.id).subscribe(response =>{
         loader.dismiss();
+        this.navParams.get("titlePage").findReviews();
         this.dismiss();
       },
       error =>{

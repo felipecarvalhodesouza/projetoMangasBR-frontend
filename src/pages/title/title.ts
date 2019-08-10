@@ -22,6 +22,7 @@ export class TitlePage {
   userId: number;
   titleIndex: number;
   volumes: any[] = [];
+  lastPage: boolean;
   segments: String;
   totalElements: number;
   status: string;
@@ -81,6 +82,7 @@ export class TitlePage {
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
       this.volumes = this.volumes.concat(response['content']);
+      this.lastPage = response['last'];
       loader.dismiss();
     },
     error =>{
@@ -89,11 +91,18 @@ export class TitlePage {
   }
 
   doInfinite(infiniteScroll: { complete: () => void; }){ 
-    this.page++;
-    this.loadData();
-    setTimeout(() =>{
-      infiniteScroll.complete();
-    },1000);
+    if(!this.lastPage){
+      this.page++;
+      this.loadData();
+      setTimeout(() =>{
+        infiniteScroll.complete();
+      },1000);
+    }else{
+      setTimeout(() =>{
+        infiniteScroll.complete();
+      },100);
+    }
+
   }
 
   presentLoading(){
@@ -123,9 +132,9 @@ export class TitlePage {
     })
   }
 
-  presentModal() {
+  presentInsertReviewModal() {
     if(!this.verifyIfThereIsReviewFromUser()){
-      const modal = this.modalCtrl.create(InsertReviewPage, { userId: this.userId, title: this.title });
+      const modal = this.modalCtrl.create(InsertReviewPage, { userId: this.userId, title: this.title, titlePage: this });
       modal.present();
     }
     else{
