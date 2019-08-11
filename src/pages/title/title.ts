@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
 import { TitleDTO } from '../../models/title.dto';
 import { API_CONFIG } from '../../config/api.config';
-import { TitleService } from '../../services/title.service';
+import { TitleService } from '../../services/domain/title.service';
 import { ReviewDTO } from '../../models/review.dto';
 import { UserService } from '../../services/domain/user.service';
 import { DatePipe } from '@angular/common';

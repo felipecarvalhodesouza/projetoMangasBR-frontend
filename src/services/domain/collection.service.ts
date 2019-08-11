@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Rx";
-import { API_CONFIG } from "../config/api.config";
-import { UserService } from "./domain/user.service";
-import { UserDTO } from "../models/user.dto";
-import { StorageService } from "./storage.service";
+import { API_CONFIG } from "../../config/api.config";
+import { UserService } from "./user.service";
+import { UserDTO } from "../../models/user.dto";
+import { StorageService } from "../storage.service";
 import { LoadingController } from "ionic-angular";
 import { App } from "ionic-angular/components/app/app";
 

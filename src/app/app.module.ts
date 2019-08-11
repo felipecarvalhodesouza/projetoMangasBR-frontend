@@ -10,21 +10,24 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
-import { CollectionService } from '../services/collection.service';
+import { CollectionService } from '../services/domain/collection.service';
 import { UserService } from '../services/domain/user.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
-import { TitleService } from '../services/title.service';
+import { TitleService } from '../services/domain/title.service';
 import { PasswordCheckService } from '../services/password.check.service';
 import { LoadingService } from '../services/loading.service';
 import { DatePipe } from '@angular/common';
 import { InsertReviewPage } from '../pages/insert-review/insert-review';
 import { ImageUtilService } from '../services/image-util.service';
 import { ReviewService } from '../services/domain/review.service';
+import { PublisherService } from '../services/domain/publisher.service';
+import { PublisherInformationPage } from '../pages/publisher-information/publisher-information';
 
 @NgModule({
   declarations: [
     MyApp,
-    InsertReviewPage
+    InsertReviewPage,
+    PublisherInformationPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { ReviewService } from '../services/domain/review.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    InsertReviewPage
+    InsertReviewPage,
+    PublisherInformationPage
   ],
   providers: [
     StatusBar,
@@ -51,7 +55,8 @@ import { ReviewService } from '../services/domain/review.service';
     LoadingService,
     DatePipe,
     ImageUtilService,
-    ReviewService
+    ReviewService,
+    PublisherService
   ]
 })
 export class AppModule {}

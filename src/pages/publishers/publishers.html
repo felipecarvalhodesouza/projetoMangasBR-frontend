@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Editoras</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <button ion-item *ngFor="let publisher of publishers" (click)="presentPublisherInformationModal(publisher)">
+          {{ publisher.name }}
+        </button>  
+      </ion-list>
+
+
+      <ion-fab right bottom *ngIf="admin==true">
+          <button ion-fab><ion-icon  name="md-create"></ion-icon></button>
+          <ion-fab-list side="left">
+            <button ion-fab (click)="presentInsertPublisherModal()"><ion-icon name="color-wand"></ion-icon></button>
+          </ion-fab-list>
+        </ion-fab>
+</ion-content>

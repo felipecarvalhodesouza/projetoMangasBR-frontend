@@ -1,9 +1,11 @@
+import { PublisherDTO } from "./publisher.dto";
+
 export interface TitleDTO {
     id: string;
     name: string;
     score: number;
     finished: boolean;
-    publisher: any
+    publisher: PublisherDTO
     synopsis: string;
     start: string;
     end: string;

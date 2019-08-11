@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController, LoadingController } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
-import { CollectionService } from '../../services/collection.service';
+import { CollectionService } from '../../services/domain/collection.service';
 import { StorageService } from '../../services/storage.service';
 import { UserService } from '../../services/domain/user.service';
 

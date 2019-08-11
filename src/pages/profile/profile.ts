@@ -4,7 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { UserDTO } from '../../models/user.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { UserService } from '../../services/domain/user.service';
-import { CollectionService } from '../../services/collection.service';
+import { CollectionService } from '../../services/domain/collection.service';
 import { DatePipe } from '@angular/common';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 

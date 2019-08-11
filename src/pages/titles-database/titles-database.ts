@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Searchbar } from 'ionic-angular';
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';
-import { TitleService } from '../../services/title.service';
+import { TitleService } from '../../services/domain/title.service';
 import { LoadingService } from '../../services/loading.service';
 
 @IonicPage()

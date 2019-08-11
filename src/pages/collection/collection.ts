@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular';
-import { CollectionService } from '../../services/collection.service';
+import { CollectionService } from '../../services/domain/collection.service';
 
 import { API_CONFIG } from '../../config/api.config';
 import { TitleDTO } from '../../models/title.dto';

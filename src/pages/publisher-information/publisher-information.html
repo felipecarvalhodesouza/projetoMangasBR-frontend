@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button (click)="dismiss()" clear>
+         Fechar
+      </button>
+      <ion-title>{{publisher.name}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+
+  <ion-content padding>
+
+      <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+                <img src="{{bucketUrl}}/publisher{{publisher.id}}.jpg" style="border: black">
+            </ion-col>
+            <ion-col style="padding-left: 15px; padding-top: 3"> 
+
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+  
+      <div padding style="padding: 0">
+        <ion-segment [(ngModel)]="segments">
+          <ion-segment-button value="titles">
+            Títulos
+          </ion-segment-button>
+          <ion-segment-button value="history">
+            História
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      
+      <div [ngSwitch]="segments">
+        <ion-grid *ngSwitchCase="'titles'">
+            <ion-list>
+                <button ion-item *ngFor="let title of titles" (click)="toTitlePage(title)">
+                  {{ title.name }}
+                </button>  
+              </ion-list>
+        </ion-grid>
+  
+        <ion-list *ngSwitchCase="'history'" style="padding: 3px;">
+          <div *ngFor="let paragraph of paragraphs;" id="paragraphFont">
+            {{paragraph}}
+          </div>
+        </ion-list>
+      </div>
+
+  </ion-content>
