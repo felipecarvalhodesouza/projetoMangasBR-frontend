@@ -1,0 +1,101 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>{{title.name}}</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+  
+      <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+                <img src="{{bucketUrl}}/title{{title.id}}.jpg" style="border: black">
+            </ion-col>
+            <ion-col style="padding-left: 15px; padding-top: 3"> 
+                    <ion-label style="margin-top:5px">Editora: {{title.publisher.name}}</ion-label>
+                    <ion-label>Status: {{status}}</ion-label>
+                    <ion-label>Volumes: {{totalElements}}</ion-label>
+                    <ion-label>Início: {{title.start}}</ion-label>
+                    <ion-label>Fim: {{title.end}}</ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <button ion-button block [disabled]="inCollection" (click)="addTitleToCollection()">Adicionar título à coleção</button>
+          </ion-row>
+      </ion-grid>
+  
+      <div padding style="padding: 0">
+        <ion-segment [(ngModel)]="segments">
+          <ion-segment-button value="volumes">
+            Volumes
+          </ion-segment-button>
+          <ion-segment-button value="sinopse">
+            Sinopse
+          </ion-segment-button>
+          <ion-segment-button value="reviews">
+            Reviews
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      
+      <div [ngSwitch]="segments">
+        <ion-grid *ngSwitchCase="'volumes'">
+            <div *ngFor="let volume of volumes; let i = index;">
+              <ion-row *ngIf="i % 3 === 0">
+                <ion-col col-4 *ngIf="i < volumes.length">
+                  <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+                  <p style="text-align: center"> {{volumes[i].name}} </p>
+              </ion-col>
+                <ion-col col-4 *ngIf="i+1 < volumes.length">
+                  <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+                  <p style="text-align: center"> {{volumes[i+1].name}} </p>
+                </ion-col>
+                <ion-col col-4 *ngIf="i+2 < volumes.length">
+                  <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+                <p style="text-align: center"> {{volumes[i+2].name}} </p>
+                </ion-col>
+              </ion-row>
+            </div>
+        </ion-grid>
+  
+        <ion-list *ngSwitchCase="'sinopse'" style="padding: 3px;">
+          <div *ngFor="let sinopse of synopsis; let i = index;" id="synopsisFont">
+            {{synopsis[i]}}
+          </div>
+        </ion-list>
+        <ion-list *ngSwitchCase="'reviews'">
+          <div *ngFor="let review of reviews" style="margin: 15px">
+            <ion-grid>
+            <ion-row *ngIf="verifyIndexOfReview(review)%2!=0" style="align-items: center" >
+              <ion-col>
+                  <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+              </ion-col>
+              <ion-col col-10>
+                  <div class="speech-bubble-left" (press)="deleteReview(review)">
+                      <ion-badge style="float:right; padding: 5px; color:white">{{review.score}}</ion-badge>
+                      <ion-label class="speech-bubble-left-text" text-wrap>{{review.text}}</ion-label>
+                      <ion-label class="speech-bubble-left-text" style="font: bold" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
+                    </div>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="verifyIndexOfReview(review)%2==0" style="align-items: center" >
+                <ion-col col-10>
+                    <div class="speech-bubble-right" (press)="deleteReview(review)">
+                        <ion-badge style="float:right; margin: 5px; color:white">{{review.score}}</ion-badge>
+                        <ion-label class="speech-bubble-right-text" text-wrap>{{review.text}}</ion-label>
+                        <ion-label class="speech-bubble-right-text" style="font: bold; padding-bottom: 5px" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
+                      </div>
+                </ion-col>
+                <ion-col>
+                    <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-list>
+      </div>
+  </ion-content>
+  

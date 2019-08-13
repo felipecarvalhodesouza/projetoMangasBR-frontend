@@ -59,4 +59,10 @@ export class PublisherInformationPage {
     });
   }
 
+  toTitlePage(obj: TitleDTO){
+    this.navCtrl.push('AddTitleToCollectionPage', {
+      title: obj
+    });
+  }
+
 }

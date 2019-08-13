@@ -7,6 +7,7 @@ import { UserDTO } from "../../models/user.dto";
 import { StorageService } from "../storage.service";
 import { LoadingController } from "ionic-angular";
 import { App } from "ionic-angular/components/app/app";
+import { TitleDTO } from "../../models/title.dto";
 
  // para ser um service que possa ser injetado em outras classes
 @Injectable()
@@ -22,6 +23,10 @@ export class CollectionService {
     }
 
     findAll() : Observable<any> {
+        return this.http.get<any>(`${API_CONFIG.baseUrl}/users/${this.user.id}/collection`);  
+    }
+
+    findCollection(userId: string) {
         return this.http.get<any>(`${API_CONFIG.baseUrl}/users/${this.user.id}/collection`);  
     }
 
@@ -52,5 +57,14 @@ export class CollectionService {
 
     returnUser():UserDTO{
         return this.user;
+    }
+
+    insertTitle(titleId: string){
+        return this.http.post(`${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}`,
+                    null,
+                    {
+                        observe: 'response',
+                        responseType: 'text'
+                    });  
     }
 }

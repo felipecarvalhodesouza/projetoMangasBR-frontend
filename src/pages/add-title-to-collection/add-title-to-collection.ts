@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
-import { TitleDTO } from '../../models/title.dto';
 import { API_CONFIG } from '../../config/api.config';
-import { TitleService } from '../../services/domain/title.service';
+import { TitleDTO } from '../../models/title.dto';
 import { ReviewDTO } from '../../models/review.dto';
+import { TitleService } from '../../services/domain/title.service';
 import { UserService } from '../../services/domain/user.service';
 import { DatePipe } from '@angular/common';
-import { InsertReviewPage } from '../insert-review/insert-review';
 import { StorageService } from '../../services/storage.service';
 import { ReviewService } from '../../services/domain/review.service';
+import { VolumeDTO } from '../../models/volume.dto';
+import { CollectionService } from '../../services/domain/collection.service';
+
 
 @IonicPage()
 @Component({
-  selector: 'page-title',
-  templateUrl: 'title.html'
+  selector: 'page-add-title-to-collection',
+  templateUrl: 'add-title-to-collection.html',
 })
-export class TitlePage {
+export class AddTitleToCollectionPage {
 
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
   title: TitleDTO;
-  userId: number;
-  titleIndex: number;
-  volumes: any[] = [];
+  volumes: VolumeDTO[] = [];
+  userId: string;
   lastPage: boolean;
   segments: String;
   totalElements: number;
   status: string;
   reviews: ReviewDTO[];
   page: number = 0;
-  admin = false;
   synopsis: String[];
+  inCollection: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -41,12 +42,12 @@ export class TitlePage {
     public storageService: StorageService,
     public alertCtrl: AlertController,
     public datepipe: DatePipe,
-    public reviewService: ReviewService) {
-        this.titleIndex = this.navParams.get('titleIndex')+1;
-        this.segments = "volumes";
+    public reviewService: ReviewService,
+    public collectionService: CollectionService) {
         this.title = this.navParams.get('title');
+        this.userId = this.collectionService.returnUser().id;
+        this.segments = "volumes";
         this.breakLines();
-        this.userId = this.navParams.get('userId');
         if(this.title.finished){
           this.status = "Completo";
         } else {
@@ -59,17 +60,15 @@ export class TitlePage {
           this.title.end = this.datepipe.transform(this.title.end, 'MM/yyyy');
         }
         this.findReviews();
+        
   }
 
   ionViewDidLoad() {
     let loader = this.presentLoading();
-
-    this.isAdmin(); 
-
-    this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
+    this.isInCollection();
+    this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
-      this.volumes = response['content'];
-      this.totalElements = response['totalElements'];
+      this.volumes = response;
       loader.dismiss();
     },
     error =>{
@@ -79,30 +78,20 @@ export class TitlePage {
 
   loadData(){
     let loader = this.presentLoading();
-    this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
+    this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
-      this.volumes = this.volumes.concat(response['content']);
-      this.lastPage = response['last'];
+      this.volumes = response;
+
+      this.volumes.sort(function(a, b){
+        if(a.date < b.date) { return -1; }
+        if(a.date > b.date) { return 1; }
+        return 0;
+    });
       loader.dismiss();
     },
     error =>{
       loader.dismiss();
     });
-  }
-
-  doInfinite(infiniteScroll: { complete: () => void; }){ 
-    if(!this.lastPage){
-      this.page++;
-      this.loadData();
-      setTimeout(() =>{
-        infiniteScroll.complete();
-      },1000);
-    }else{
-      setTimeout(() =>{
-        infiniteScroll.complete();
-      },100);
-    }
-
   }
 
   presentLoading(){
@@ -132,89 +121,9 @@ export class TitlePage {
     })
   }
 
-  presentInsertReviewModal() {
-    if(!this.verifyIfThereIsReviewFromUser()){
-      const modal = this.modalCtrl.create(InsertReviewPage, { userId: this.userId, title: this.title, titlePage: this });
-      modal.present();
-    }
-    else{
-      this.showError();
-    }
-  }
-
-  isAdmin(){
-    this.admin = false;
-    this.userService.getAccesses(this.userId).
-    subscribe(response =>{
-      for(var i = 0; i < response.perfis.length; i++){
-        if(response.perfis[i]=="ADMIN")
-          this.admin = true;
-        }
-      });
-  }
-
   breakLines(){
     if(this.title.synopsis!=null){
       this.synopsis = this.title.synopsis.split("\n");
-    }
-  }
-
-  verifyIfThereIsReviewFromUser(): boolean{
-    for(var i = 0; i < this.reviews.length; i++){
-      if(this.reviews[i].author.id == this.userId.toString()){
-        return true;
-      }
-    }
-    return false;
-  }
-
-  showError(){
-    let alert = this.alertCtrl.create({
-      title: 'Erro!',
-      message: 'Você já possue uma review nesse título',
-      enableBackdropDismiss: false,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
-  deleteReview(review:ReviewDTO){
-    this.showConfirm(review);
-  }
-
-  showConfirm(review:ReviewDTO) {
-
-    if(review.author.id==this.userId.toString()){
-      const confirm = this.alertCtrl.create({
-        title: 'Apagar review?',
-        message: 'Você tem certeza que deseja apagar a sua review desse título?',
-        buttons: [
-          {
-            text: 'Sim',
-            handler: () => {
-              this.reviewService.delete(review, this.userId, this.title.id).subscribe(response =>{
-                this.findReviews();
-              },
-              error =>{
-                console.log(error);
-              });
-            }
-          },
-          {
-            text: 'Não',
-            handler: () => {
-              
-            }
-          }
-        ]
-      });
-      confirm.present();
     }
   }
 
@@ -223,6 +132,47 @@ export class TitlePage {
       return this.reviews.indexOf(review);
     }
     return;
+  }
+
+  isInCollection(){
+    this.collectionService.findCollection(this.userId).subscribe(response =>{
+      var titles = response['titles'];
+      for(var i=0; i < titles.length; i++){
+        if(titles[i].id === this.title.id){
+          this.inCollection = true;
+        }
+      }
+    });
+  }
+
+  addTitleToCollection(){
+    let loader = this.presentLoading();
+    this.collectionService.insertTitle(this.title.id).subscribe(response=>{
+      
+      loader.dismiss();
+      this.showInsertOk();
+  },
+    error =>{
+      loader.dismiss();
+    })
+  }
+
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Título adicionado com sucesso.',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.collectionService.findAll();
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

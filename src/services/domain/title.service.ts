@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../../config/api.config";
 import { TitleDTO } from "../../models/title.dto";
+import { VolumeDTO } from "../../models/volume.dto";
 
 @Injectable()
 export class TitleService {
@@ -14,11 +15,19 @@ export class TitleService {
         return this.http.get(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}?page=${page}&linesPerPage=${linesPerPage}`); 
     }
 
-    findReviews(titleIndex: number){
+    findReviews(titleIndex: string){
         return this.http.get(`${API_CONFIG.baseUrl}/titles/${titleIndex}/reviews`);
     }
 
     findTitles(){
         return this.http.get<TitleDTO[]>(`${API_CONFIG.baseUrl}/titles`); 
+    }
+
+    findTitleById(titleId: string){
+        return this.http.get<TitleDTO>(`${API_CONFIG.baseUrl}/titles/${titleId}`); 
+    }
+
+    findVolumesByTitleId(titleId: string){
+        return this.http.get<VolumeDTO[]>(`${API_CONFIG.baseUrl}/titles/${titleId}/volumes`); 
     }
 }

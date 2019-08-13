@@ -45,9 +45,9 @@ export class TitlesDatabasePage {
     })
   }
 
-  enterTitlePage(obj: TitleDTO, index: any) {
-    this.navCtrl.push('AddTitlePage', {
-      titleIndex: index
+  enterTitlePage(obj: TitleDTO) {
+    this.navCtrl.push('AddTitleToCollectionPage', {
+      title: obj
     });
   }
 
