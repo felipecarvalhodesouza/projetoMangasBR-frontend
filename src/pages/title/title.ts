@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InsertReviewPage } from '../insert-review/insert-review';
 import { StorageService } from '../../services/storage.service';
 import { ReviewService } from '../../services/domain/review.service';
+import { VolumeUserDTO } from '../../models/volume.user.dto';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,7 @@ export class TitlePage {
   title: TitleDTO;
   userId: number;
   titleIndex: number;
-  volumes: any[] = [];
+  volumes: VolumeUserDTO[] = [];
   lastPage: boolean;
   segments: String;
   totalElements: number;
@@ -69,6 +70,11 @@ export class TitlePage {
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
       this.volumes = response['content'];
+      this.volumes.sort(function(a,b){
+        if(a.id < b.id) { return -1; }
+        if(a.id > b.id) { return 1; }
+        return 0;
+    });
       this.totalElements = response['totalElements'];
       loader.dismiss();
     },

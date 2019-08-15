@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Rx";
 import { API_CONFIG } from "../../config/api.config";
 import { UserService } from "./user.service";
@@ -66,5 +66,18 @@ export class CollectionService {
                         observe: 'response',
                         responseType: 'text'
                     });  
+    }
+
+    removeTitle(titleId: string){
+
+        const options = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+            }),
+            //body: obj
+        };
+      
+        return this.http.delete(
+            `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}`, options)
     }
 }

@@ -42,7 +42,6 @@ export class CollectionPage {
       this.items=response.titles;
       this.itemsSearchBar=this.items;
       this.userId = response.id;
-      console.log(this.userId);
       },
       error => {
         if(error.status == 403){
@@ -108,6 +107,39 @@ export class CollectionPage {
     setTimeout(() => {
       this.searchbar.setFocus();
     }, 600);
+  }
+
+  removeTitle(obj: TitleDTO){
+    var loader = this.loadingService.initLoader();
+
+    this.collectionService.removeTitle(obj.id).subscribe(response=>{
+      this.collectionService.findCollection(this.userId.toString()).subscribe(response=>{
+        this.items = response['titles'];
+      })
+    })
+
+    this.loadingService.dismissLoader(loader);
+  }
+
+  confirmAlert(obj: TitleDTO){
+    let alert = this.alertCtrl.create({
+      title: 'Deseja remover o título da sua coleção?',
+      message: "Atenção! Todos os dados referentes aos volumes desse título serão perdidos.",
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.removeTitle(obj);
+          }
+        },
+        {
+          text: 'Cancelar',
+
+        }
+      ]
+    });
+    alert.present();
   }
 
 }
