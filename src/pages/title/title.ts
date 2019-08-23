@@ -10,6 +10,7 @@ import { InsertReviewPage } from '../insert-review/insert-review';
 import { StorageService } from '../../services/storage.service';
 import { ReviewService } from '../../services/domain/review.service';
 import { VolumeUserDTO } from '../../models/volume.user.dto';
+import { CollectionService } from '../../services/domain/collection.service';
 
 @IonicPage()
 @Component({
@@ -42,7 +43,8 @@ export class TitlePage {
     public storageService: StorageService,
     public alertCtrl: AlertController,
     public datepipe: DatePipe,
-    public reviewService: ReviewService) {
+    public reviewService: ReviewService,
+    public collectionService: CollectionService) {
         this.titleIndex = this.navParams.get('titleIndex')+1;
         this.segments = "volumes";
         this.title = this.navParams.get('title');
@@ -229,6 +231,12 @@ export class TitlePage {
       return this.reviews.indexOf(review);
     }
     return;
+  }
+
+  changeVolumeUser(doesHave: boolean, volumeUserId: string){
+    this.collectionService.updateVolumeUser(doesHave, this.title.id, volumeUserId).subscribe(response=>{
+      console.log(response);
+    })
   }
 
 }

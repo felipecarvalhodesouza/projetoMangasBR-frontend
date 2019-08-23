@@ -8,12 +8,14 @@ import { StorageService } from "../storage.service";
 import { LoadingController } from "ionic-angular";
 import { App } from "ionic-angular/components/app/app";
 import { TitleDTO } from "../../models/title.dto";
+import { VolumeUserDTO } from "../../models/volume.user.dto";
 
  // para ser um service que possa ser injetado em outras classes
 @Injectable()
 export class CollectionService {
 
     user: UserDTO;
+    volumeUser: VolumeUserDTO;
 
     constructor(public http: HttpClient,
                 public userService: UserService,
@@ -79,5 +81,21 @@ export class CollectionService {
       
         return this.http.delete(
             `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}`, options)
+    }
+
+    updateVolumeUser(doesHave: boolean, titleId: string, volumeUserId: string){
+        this.volumeUser = {
+            id: null,
+            doesHave: doesHave,
+            name: null
+        }
+        return this.http.put(
+            `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}/${volumeUserId}`,
+            this.volumeUser,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
     }
 }
