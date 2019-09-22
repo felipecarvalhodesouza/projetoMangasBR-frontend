@@ -10,6 +10,7 @@ import { StorageService } from '../../services/storage.service';
 import { ReviewService } from '../../services/domain/review.service';
 import { VolumeDTO } from '../../models/volume.dto';
 import { CollectionService } from '../../services/domain/collection.service';
+import { InsertVolumePage } from '../insert-volume/insert-volume';
 
 
 @IonicPage()
@@ -31,6 +32,7 @@ export class AddTitleToCollectionPage {
   page: number = 0;
   synopsis: String[];
   inCollection: boolean = false;
+  admin = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -66,6 +68,7 @@ export class AddTitleToCollectionPage {
   ionViewDidLoad() {
     let loader = this.presentLoading();
     this.isInCollection();
+    this.isAdmin(); 
     this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
       this.volumes = response;
@@ -173,6 +176,22 @@ export class AddTitleToCollectionPage {
       ]
     });
     alert.present();
+  }
+
+  presentInsertVolumeModal(){
+      const modal = this.modalCtrl.create(InsertVolumePage, { userId: this.userId, title: this.title, AddTitleToCollectionPage: this });
+      modal.present();
+  }
+
+  isAdmin(){
+    this.admin = false;
+    this.userService.getAccesses(+this.userId).
+    subscribe(response =>{
+      for(var i = 0; i < response.perfis.length; i++){
+        if(response.perfis[i]=="ADMIN")
+          this.admin = true;
+        }
+      });
   }
 
 }

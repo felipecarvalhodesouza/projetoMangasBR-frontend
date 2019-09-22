@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button (click)="dismiss()" clear>
+       Fechar
+    </button>
+    <ion-title>Inserir volume: {{title.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<form [formGroup]="formGroup" (ngSubmit)="insertVolume(); $event.preventDefault()">
+  <ion-item>
+    <ion-label stacked>Título do volume</ion-label>
+    <ion-input maxlength="30"  formControlName="name" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Lançamento</ion-label>
+    <ion-datetime displayFormat="MM/YYYY" placeholder="Selecione a data" formControlName="date"></ion-datetime>
+  </ion-item>  
+  <ion-item>
+    <ion-label stacked>Preço</ion-label>
+    <ion-input maxlength="8"  formControlName="price" type="number"></ion-input>
+  </ion-item>
+  <button ion-button block type="submit" [disabled]="formGroup.invalid">Confirmar</button>
+</form>
+</ion-content>

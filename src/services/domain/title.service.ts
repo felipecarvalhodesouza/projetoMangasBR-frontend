@@ -31,4 +31,15 @@ export class TitleService {
     findVolumesByTitleId(titleId: string){
         return this.http.get<VolumeDTO[]>(`${API_CONFIG.baseUrl}/titles/${titleId}/volumes`); 
     }
+ 
+    insertVolumesOnTitle({ obj, titleId }: { obj: VolumeDTO; titleId: string; }){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/titles/${titleId}`,
+            obj,
+            {
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
 }

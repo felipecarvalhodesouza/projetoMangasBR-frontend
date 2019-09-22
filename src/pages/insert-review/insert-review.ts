@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController } from 'ionic-angular';
 import { TitleDTO } from '../../models/title.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReviewDTO } from '../../models/review.dto';

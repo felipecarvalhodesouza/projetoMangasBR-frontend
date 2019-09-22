@@ -22,11 +22,13 @@ import { ImageUtilService } from '../services/image-util.service';
 import { ReviewService } from '../services/domain/review.service';
 import { PublisherService } from '../services/domain/publisher.service';
 import { PublisherInformationPage } from '../pages/publisher-information/publisher-information';
+import { InsertVolumePage } from '../pages/insert-volume/insert-volume';
 
 @NgModule({
   declarations: [
     MyApp,
     InsertReviewPage,
+    InsertVolumePage,
     PublisherInformationPage
   ],
   imports: [
@@ -38,6 +40,7 @@ import { PublisherInformationPage } from '../pages/publisher-information/publish
   entryComponents: [
     MyApp,
     InsertReviewPage,
+    InsertVolumePage,
     PublisherInformationPage
   ],
   providers: [
