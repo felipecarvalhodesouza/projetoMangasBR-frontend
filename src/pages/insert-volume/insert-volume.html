@@ -23,4 +23,9 @@
   </ion-item>
   <button ion-button block type="submit" [disabled]="formGroup.invalid">Confirmar</button>
 </form>
+<ion-item *ngIf="picture">
+  <img [src]="picture" style="height: 250px; width: 170px; display:block; margin: auto">
+</ion-item>
+<button ion-button block (click)="getGalleryPicture()" [disabled]="cameraOn">Galeria</button>
+<button *ngIf="picture" ion-button outline block (click)="cancel()">Descartar Imagem</button>
 </ion-content>

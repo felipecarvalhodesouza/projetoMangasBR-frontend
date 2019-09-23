@@ -23,6 +23,8 @@ import { ReviewService } from '../services/domain/review.service';
 import { PublisherService } from '../services/domain/publisher.service';
 import { PublisherInformationPage } from '../pages/publisher-information/publisher-information';
 import { InsertVolumePage } from '../pages/insert-volume/insert-volume';
+import { VolumeService } from '../services/domain/volume.service';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { InsertVolumePage } from '../pages/insert-volume/insert-volume';
     DatePipe,
     ImageUtilService,
     ReviewService,
-    PublisherService
+    PublisherService,
+    VolumeService,
+    Camera
   ]
 })
 export class AppModule {}

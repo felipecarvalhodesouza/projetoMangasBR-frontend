@@ -5,6 +5,8 @@ import { UserService } from '../../services/domain/user.service';
 import { TitleDTO } from '../../models/title.dto';
 import { VolumeDTO } from '../../models/volume.dto';
 import { TitleService } from '../../services/domain/title.service';
+import { CameraOptions, Camera } from '@ionic-native/camera';
+import { VolumeService } from '../../services/domain/volume.service';
 
 @IonicPage()
 @Component({
@@ -14,8 +16,11 @@ import { TitleService } from '../../services/domain/title.service';
 export class InsertVolumePage {
 
   title: TitleDTO;
-  userId: number;
   formGroup: FormGroup;
+  nextVolume: Number;
+
+  picture: string;
+  cameraOn: boolean = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -24,10 +29,11 @@ export class InsertVolumePage {
               public userService: UserService,
               public titleService: TitleService,
               public alertCtrl: AlertController,
-              public loadingControl: LoadingController) {
+              public loadingControl: LoadingController,
+              public camera: Camera,
+              public volumeService: VolumeService) {
 
     this.title = navParams.get("title");
-    this.userId = navParams.get("userId");
 
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -37,7 +43,9 @@ export class InsertVolumePage {
   }
 
   ionViewDidLoad() {
-    
+    this.titleService.findVolumesByTitleId(this.title.id).subscribe(response=>{
+      this.nextVolume = (response.length) +1 ;
+    })
   }
 
   presentLoading(){
@@ -60,6 +68,7 @@ export class InsertVolumePage {
     newVolume.date = newVolume.date.replace("-","/");
     this.titleService.insertVolumesOnTitle({ obj: newVolume, titleId: this.title.id }).subscribe(
       response =>{
+        this.sendPicture();
         loader.dismiss();
         this.navParams.get("AddTitleToCollectionPage").ionViewDidLoad();
         this.dismiss();
@@ -90,6 +99,37 @@ export class InsertVolumePage {
 
   dismiss(){
     this.viewCtrl.dismiss();
+  }
+
+  getGalleryPicture(){
+
+      const options: CameraOptions = {
+        quality: 100,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.PNG,
+        mediaType: this.camera.MediaType.PICTURE
+      }
+
+      this.camera.getPicture(options).then((imageData) => {
+        this.picture = 'data:image/png;base64,' + imageData;
+        this.cameraOn = false;
+      }, (err) => {});
+  }
+
+  cancel(){
+    this.picture = null;
+  }
+
+  sendPicture(){
+    if(this.picture){
+      this.volumeService.uploadPicture(this.picture, this.title.id, this.nextVolume)
+      .subscribe(response => {
+        this.picture = null;
+      },
+      error =>{
+      });
+    }
   }
 
 }
