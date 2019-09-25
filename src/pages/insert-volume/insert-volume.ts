@@ -59,25 +59,30 @@ export class InsertVolumePage {
   insertVolume(){
 
     let loader = this.presentLoading();
-
-    let newVolume:VolumeDTO = {
-      name: this.formGroup.value.name.trim(),
-      date: this.formGroup.value.date,
-      price: this.formGroup.value.price
-    }
-    newVolume.date = newVolume.date.replace("-","/");
-    this.titleService.insertVolumesOnTitle({ obj: newVolume, titleId: this.title.id }).subscribe(
-      response =>{
-        this.sendPicture();
-        loader.dismiss();
-        this.navParams.get("AddTitleToCollectionPage").ionViewDidLoad();
-        this.dismiss();
-      },
-      error =>{
-        loader.dismiss();
-        this.showAlert("Erro","Houve um problema na inserção do volume.")
+    if(this.picture == null || this.canUpload(this.verifySizeOfImg(this.picture))){
+      let newVolume:VolumeDTO = {
+        name: this.formGroup.value.name.trim(),
+        date: this.formGroup.value.date,
+        price: this.formGroup.value.price
       }
-    )
+      newVolume.date = newVolume.date.replace("-","/");
+      this.titleService.insertVolumesOnTitle({ obj: newVolume, titleId: this.title.id }).subscribe(
+        response =>{
+          this.sendPicture();
+          loader.dismiss();
+          this.navParams.get("AddTitleToCollectionPage").ionViewDidLoad();
+          this.showAlert("Sucesso","Volume adicionado com sucesso.")
+        },
+        error =>{
+          loader.dismiss();
+          this.showAlert("Erro","Houve um problema na inserção do volume.")
+        }
+      )
+    } else {
+        loader.dismiss();
+        this.showAlert("Erro", "Imagem muito grande para ser enviada.");
+        this.picture = null;
+    }
   }
 
   showAlert(title: string, text: string){
@@ -124,12 +129,24 @@ export class InsertVolumePage {
   sendPicture(){
     if(this.picture){
       this.volumeService.uploadPicture(this.picture, this.title.id, this.nextVolume)
-      .subscribe(response => {
-        this.picture = null;
-      },
-      error =>{
-      });
+        .subscribe(response => {
+          this.picture = null;
+        },
+        error =>{});
     }
   }
 
+  verifySizeOfImg(img:String){
+    if(img.endsWith('=')){
+      return (img.length * (3/4)) - 1
+    }else{
+      return (img.length * (3/4)) - 2
+    }
+  }
+
+  canUpload(size){
+    if(size < 500000)
+      return true;
+    else return false;
+  }
 }
