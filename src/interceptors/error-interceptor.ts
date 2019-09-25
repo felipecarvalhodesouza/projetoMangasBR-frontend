@@ -18,38 +18,34 @@ export class ErrorInterceptor implements HttpInterceptor{
         .catch((error, caught) => {
 
             let errorObj = error;
-            if(!errorObj.status){
-                if(errorObj.error){
-                    errorObj = errorObj.error;
-                }
-                if(!errorObj.status){
-                    errorObj = JSON.parse(errorObj);
-                }
+            if(errorObj.error){
+                errorObj = errorObj.error;
             }
-
+            if(!errorObj.status){
+                errorObj = JSON.parse(errorObj);
+            }
             console.log("Erro detectado pelo Interceptor");
             console.log(errorObj);
-
-            switch(errorObj.status){
-                case 400:
-                    this.handle400(errorObj);
-                    break;
-                case 401:
-                    this.handle401();
-                    break;
-                case 403: 
-                    this.handle403();
-                    break;
-                case 404:
-                    this.handle404();
-                    break
-                case 422:
-                    this.handle422(errorObj);
-                    break;
-                default:
-                    this.handleDefaultError(errorObj);
-            }
-
+                
+                switch(error.status){
+                    case 400:
+                        this.handle400(errorObj);
+                        break;
+                    case 401:
+                        this.handle401();
+                        break;
+                    case 403: 
+                        this.handle403();
+                        break;
+                    case 404:
+                        this.handle404();
+                        break
+                    case 422:
+                        this.handle422(errorObj);
+                        break;
+                    default:
+                        this.handleDefaultError(errorObj);
+                }
             return Observable.throw(errorObj);
         }) as any;
     }
@@ -106,8 +102,8 @@ export class ErrorInterceptor implements HttpInterceptor{
 
     handleDefaultError(errorObj){
         let alert = this.alertCtrl.create({
-            title: 'Erro ' + errorObj.status + ': ' + errorObj.errors.error,
-            message: errorObj.errors.message,
+            title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
+            message: errorObj.message,
             enableBackdropDismiss: false,
             buttons: [
                 {
