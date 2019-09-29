@@ -7,6 +7,9 @@ import { UserService } from '../../services/domain/user.service';
 import { CollectionService } from '../../services/domain/collection.service';
 import { DatePipe } from '@angular/common';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { TitleDTO } from '../../models/title.dto';
+import { TitleService } from '../../services/domain/title.service';
+import { VolumeUserDTO } from '../../models/volume.user.dto';
 
 
 @IonicPage()
@@ -19,6 +22,11 @@ export class ProfilePage {
   user: UserDTO;
   segments: String;
 
+  titles: number = 0 ;;
+  completedTitles: number = 0 ;
+  numberOfVolumes: number = 0 ;
+  missingVolumes: number = 0 ;
+
   picture: string;
   cameraOn: boolean = false;
 
@@ -28,7 +36,8 @@ export class ProfilePage {
               public userService: UserService,
               public collectionService: CollectionService,
               public datepipe: DatePipe,
-              public camera: Camera) {
+              public camera: Camera,
+              public titleService: TitleService) {
               this.segments = "data";
   }
 
@@ -44,6 +53,7 @@ export class ProfilePage {
           this.user = response;
           this.getImageIfExists();
           this.user.memberSince = this.datepipe.transform(this.user.memberSince, 'dd-MM-yyyy');
+          this.loadCollectionInformation();
         },
         error => {
           if(error.status == 403){
@@ -103,6 +113,29 @@ export class ProfilePage {
 
   cancel(){
     this.picture = null;
+  }
+
+  loadCollectionInformation(){
+    this.collectionService.findCollection(this.user.id).subscribe(response =>{
+      let titles: [TitleDTO] = response['titles'];
+        for(let i=0; i < titles.length; i++){
+          this.titleService.findTitleVolumesWithouthPageable(this.user.id, titles[i].id).subscribe(response=>{
+            let aux=0;
+            let volumes: [VolumeUserDTO] = response;
+            volumes.forEach(element => {
+              if(element.doesHave){
+                this.numberOfVolumes++;
+              }
+              else{
+                aux++;
+                this.missingVolumes++;
+              }
+            });
+            if(aux===0) this.completedTitles++;
+          });
+        }
+        this.titles++;
+      });
   }
 
 }

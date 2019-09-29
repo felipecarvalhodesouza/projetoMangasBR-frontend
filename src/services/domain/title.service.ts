@@ -16,6 +16,10 @@ export class TitleService {
         return this.http.get<VolumeUserDTO>(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}?page=${page}&linesPerPage=${linesPerPage}`); 
     }
 
+    findTitleVolumesWithouthPageable(userId: String, titleIndex: String){
+        return this.http.get<[VolumeUserDTO]>(`${API_CONFIG.baseUrl}/users/${userId}/collection/${titleIndex}/all`); 
+    }
+
     findReviews(titleIndex: string){
         return this.http.get(`${API_CONFIG.baseUrl}/titles/${titleIndex}/reviews`);
     }

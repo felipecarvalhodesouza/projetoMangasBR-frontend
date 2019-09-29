@@ -59,7 +59,26 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'stats'">
-      
+      <ion-item>
+        <ion-label>
+          <p class="collectionSegment">Títulos na coleção:</p>
+          <h2 class="collectionSegment">{{titles}}</h2>  
+        </ion-label>
+        <ion-label>
+          <p class="collectionSegment">Títulos completos</p>
+          <h2 class="collectionSegment">{{completedTitles}} <ion-icon *ngIf="titles>=10" name="trophy"></ion-icon></h2>
+       </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p class="collectionSegment">Volumes</p>
+          <h2 class="collectionSegment">{{numberOfVolumes}}</h2>
+        </ion-label>
+        <ion-label>
+          <p class="collectionSegment">Volumes faltantes</p>
+          <h2 class="collectionSegment">{{missingVolumes}}</h2>
+        </ion-label>
+      </ion-item>
     </ion-list>
   </div>
   </ion-content>
