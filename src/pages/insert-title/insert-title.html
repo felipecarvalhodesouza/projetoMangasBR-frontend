@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button (click)="dismiss()" clear>
+         Fechar
+      </button>
+      <ion-title>Inserir Título</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+  <form [formGroup]="formGroup" (ngSubmit)="insertTitle(); $event.preventDefault()">
+    <ion-item>
+      <ion-label stacked>Título</ion-label>
+      <ion-input maxlength="30"  formControlName="name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Início</ion-label>
+      <ion-datetime displayFormat="MM-YYYY-DD" placeholder="Selecione a data" formControlName="startDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Fim</ion-label>
+      <ion-datetime displayFormat="MM-YYYY-DD" placeholder="Selecione a data" formControlName="endDate"></ion-datetime>
+    </ion-item>  
+    <ion-item>
+        <ion-label stacked>Autor</ion-label>
+        <ion-input maxlength="30"  formControlName="author"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Editora</ion-label>
+        <ion-select [(ngModel)]="publisher" formControlName="publisher">
+          <ion-option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</ion-option>       
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Sinopse</ion-label>
+        <ion-textarea maxlength="500"  formControlName="synopsis" type="text"></ion-textarea>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Confirmar</button>
+  </form>
+  <ion-item *ngIf="picture">
+    <img [src]="picture" style="height: 250px; width: 170px; display:block; margin: auto">
+  </ion-item>
+  <button ion-button block (click)="getGalleryPicture()" [disabled]="cameraOn">Galeria</button>
+  <button *ngIf="picture" ion-button outline block (click)="cancel()">Descartar Imagem</button>
+  </ion-content>
+  

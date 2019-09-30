@@ -135,7 +135,7 @@ export class ProfilePage {
           });
         }
         this.titles++;
-      });
+      }); 
   }
 
 }

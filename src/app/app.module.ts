@@ -25,13 +25,15 @@ import { PublisherInformationPage } from '../pages/publisher-information/publish
 import { InsertVolumePage } from '../pages/insert-volume/insert-volume';
 import { VolumeService } from '../services/domain/volume.service';
 import { Camera } from '@ionic-native/camera';
+import { InsertTitlePage } from '../pages/insert-title/insert-title';
 
 @NgModule({
   declarations: [
     MyApp,
     InsertReviewPage,
     InsertVolumePage,
-    PublisherInformationPage
+    PublisherInformationPage,
+    InsertTitlePage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { Camera } from '@ionic-native/camera';
     MyApp,
     InsertReviewPage,
     InsertVolumePage,
-    PublisherInformationPage
+    PublisherInformationPage,
+    InsertTitlePage
   ],
   providers: [
     StatusBar,
