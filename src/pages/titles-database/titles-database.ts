@@ -60,7 +60,8 @@ export class TitlesDatabasePage {
 
   enterTitlePage(obj: TitleDTO) {
     this.navCtrl.push('AddTitleToCollectionPage', {
-      title: obj
+      title: obj,
+      titlePage: this
     });
   }
 

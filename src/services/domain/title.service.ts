@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { API_CONFIG } from "../../config/api.config";
 import { TitleDTO } from "../../models/title.dto";
 import { VolumeDTO } from "../../models/volume.dto";
@@ -71,5 +71,18 @@ export class TitleService {
                 observe: 'response',
                 responseType: 'text'
             });
-        }
+    }
+
+    removeTitle(titleId: string){
+
+        const options = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/json',
+            }),
+            //body: obj
+        };
+      
+        return this.http.delete(
+            `${API_CONFIG.baseUrl}/titles/${titleId}`, options)
+    }
 }

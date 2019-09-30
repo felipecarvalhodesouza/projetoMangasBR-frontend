@@ -151,31 +151,12 @@ export class AddTitleToCollectionPage {
   addTitleToCollection(){
     let loader = this.presentLoading();
     this.collectionService.insertTitle(this.title.id).subscribe(response=>{
-      
       loader.dismiss();
-      this.showInsertOk();
+      this.presentAlert("Sucesso", "Título adicionado com sucesso");
   },
     error =>{
       loader.dismiss();
     })
-  }
-
-  showInsertOk(){
-    let alert = this.alertCtrl.create({
-      title: 'Sucesso!',
-      message: 'Título adicionado com sucesso.',
-      enableBackdropDismiss: false,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            this.collectionService.findAll();
-            this.navCtrl.pop();
-          }
-        }
-      ]
-    });
-    alert.present();
   }
 
   presentInsertVolumeModal(){
@@ -192,6 +173,58 @@ export class AddTitleToCollectionPage {
           this.admin = true;
         }
       });
+  }
+
+  deleteTitle(){
+    if(this.volumes.length===0){
+      let alert = this.alertCtrl.create({
+        title: 'Cuidado',
+        message: 'Tem certeza que deseja eliminar o título?',
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              let loader = this.presentLoading();
+              this.titleService.removeTitle(this.title.id).subscribe(reseponse =>{
+                loader.dismiss();
+                this.presentAlert("Sucesso", "Título deletado com sucesso!");
+                this.navParams.get('titlePage').ionViewDidLoad();
+              },
+              error =>{
+                console.log(error);
+                loader.dismiss();
+              }); 
+            }
+          },
+          {
+            text: 'Não',
+            handler: () =>{
+            }
+          }
+        ]
+      });
+      alert.present();
+    } else{
+      this.presentAlert("Ação negada", "Não é possível deletar títulos com volumes");
+    }
+  }
+
+  presentAlert(mensagemTitulo, mensagemTexto){
+    let alert = this.alertCtrl.create({
+      title: mensagemTitulo,
+      message: mensagemTexto,
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }
