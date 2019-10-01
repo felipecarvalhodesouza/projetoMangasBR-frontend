@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { UserDTO } from '../../models/user.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { UserService } from '../../services/domain/user.service';
 import { CollectionService } from '../../services/domain/collection.service';
 import { DatePipe } from '@angular/common';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { TitleDTO } from '../../models/title.dto';
 import { TitleService } from '../../services/domain/title.service';
 import { VolumeUserDTO } from '../../models/volume.user.dto';
+import { ProfilePictureModalPage } from '../profile-picture-modal/profile-picture-modal';
 
 
 @IonicPage()
@@ -27,17 +27,14 @@ export class ProfilePage {
   numberOfVolumes: number = 0 ;
   missingVolumes: number = 0 ;
 
-  picture: string;
-  cameraOn: boolean = false;
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public storage: StorageService,
               public userService: UserService,
               public collectionService: CollectionService,
               public datepipe: DatePipe,
-              public camera: Camera,
-              public titleService: TitleService) {
+              public titleService: TitleService,
+              public modalCtrl: ModalController) {
               this.segments = "data";
   }
 
@@ -82,39 +79,6 @@ export class ProfilePage {
     this.navCtrl.push('ChangePasswordPage');
   }
 
-  getCameraPicture(){
-
-    this.cameraOn = true;
-
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-     this.picture = 'data:image/png;base64,' + imageData;
-     this.cameraOn = false;
-    }, 
-    (err) => {
-    });
-  }
-
-  sendPicture(){
-    this.userService.uploadPicture(this.picture)
-    .subscribe(response => {
-      this.picture = null;
-      this.loadData();
-    },
-    error =>{
-    });
-  }
-
-  cancel(){
-    this.picture = null;
-  }
-
   loadCollectionInformation(){
     this.collectionService.findCollection(this.user.id).subscribe(response =>{
       let titles: [TitleDTO] = response['titles'];
@@ -138,4 +102,8 @@ export class ProfilePage {
       }); 
   }
 
+  presentSendProfilePictureModal() {
+      const modal = this.modalCtrl.create(ProfilePictureModalPage, { userImg: this.user.imageUrl });
+      modal.present();
+  }
 }

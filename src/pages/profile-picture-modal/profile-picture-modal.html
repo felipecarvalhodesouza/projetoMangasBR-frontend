@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button (click)="dismiss()" clear>
+       Fechar
+    </button>
+    <ion-title>Alterar imagem do perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item *ngIf="picture">
+    <img [src]="picture" style="height: 120px; width: 120px; display:block; margin: auto; border-radius: 50%">
+  </ion-item>
+  <ion-item *ngIf="!picture">
+    <img [src]="userImg || 'assets/imgs/avatar-blank.png'" style="height: 120px; width: 120px; display:block; margin: auto; border-radius: 50%">
+  </ion-item>
+  <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Câmera</button>
+  <button ion-button block (click)="getGalleryPicture()" [disabled]="cameraOn">Galeria</button>
+  <button *ngIf="picture" ion-button outline block (click)="cancel()">Descartar Imagem</button>
+  <button ion-button block (click)="sendPicture()" [disabled]="!picture">Confirmar</button>
+
+</ion-content>

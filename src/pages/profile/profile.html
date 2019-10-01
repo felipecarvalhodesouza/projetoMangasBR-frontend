@@ -11,10 +11,10 @@
 
     <div class="user-photo" padding-top>
         <ion-avatar>
-          <img [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'">
+          <img [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'" style="border-radius: 50%">
         </ion-avatar>
         <ion-label style="text-align: center">
-            <p style="color:gray">Trocar imagem de perfil</p>
+            <p style="color:gray" (click)="presentSendProfilePictureModal()">Trocar imagem de perfil</p>
         </ion-label>
       </div>
 
