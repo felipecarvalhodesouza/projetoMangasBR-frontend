@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { UserService } from '../../services/domain/user.service';
+import { isTrueProperty } from 'ionic-angular/util/util';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,13 @@ export class ProfilePictureModalPage {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: true,
+      correctOrientation: true,
+      targetHeight: 150,
+      targetWidth: 150,
+      saveToPhotoAlbum: true
+
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -44,17 +51,22 @@ export class ProfilePictureModalPage {
      this.cameraOn = false;
     }, 
     (err) => {
+      this.cameraOn = false;
     });
   }
 
   getGalleryPicture(){
 
       const options: CameraOptions = {
-        quality: 100,
+        quality: 10,
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.PNG,
-        mediaType: this.camera.MediaType.PICTURE
+        mediaType: this.camera.MediaType.PICTURE,
+        allowEdit: true,
+        correctOrientation: true,
+        targetHeight: 150,
+        targetWidth: 150
       }
 
       this.camera.getPicture(options).then((imageData) => {

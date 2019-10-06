@@ -3,7 +3,8 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Profile</ion-title>
+    <ion-title style="float:left; text-align: center">Profile</ion-title>
+    <ion-icon large name="camera" (click)="presentSendProfilePictureModal()" style="float:right; padding-right: 15px"></ion-icon>
   </ion-navbar>
 </ion-header>
 
@@ -13,10 +14,7 @@
         <ion-avatar>
           <img [src]="user?.imageUrl || 'assets/imgs/avatar-blank.png'" style="border-radius: 50%">
         </ion-avatar>
-        <ion-label style="text-align: center">
-            <p style="color:gray" (click)="presentSendProfilePictureModal()">Trocar imagem de perfil</p>
-        </ion-label>
-      </div>
+    </div>
 
     <div padding>
         <ion-segment [(ngModel)]="segments">

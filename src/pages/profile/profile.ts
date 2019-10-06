@@ -83,7 +83,7 @@ export class ProfilePage {
     this.collectionService.findCollection(this.user.id).subscribe(response =>{
       let titles: [TitleDTO] = response['titles'];
         for(let i=0; i < titles.length; i++){
-          this.titleService.findTitleVolumesWithouthPageable(this.user.id, titles[i].id).subscribe(response=>{
+          this.titleService.findTitleVolumesWithouthPageable(this.user.id, (i+1).toString()).subscribe(response=>{
             let aux=0;
             let volumes: [VolumeUserDTO] = response;
             volumes.forEach(element => {

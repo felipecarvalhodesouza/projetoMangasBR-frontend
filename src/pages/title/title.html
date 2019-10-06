@@ -12,7 +12,7 @@
     <ion-grid>
         <ion-row>
           <ion-col col-4>
-              <img src="{{bucketUrl}}/title{{title.id}}.jpg" style="border: black">
+              <img src="{{bucketUrl}}/title{{title.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" style="border: black">
           </ion-col>
           <ion-col style="padding-left: 15px; padding-top: 3"> 
                   <ion-label style="margin-top:5px">Editora: {{title.publisher.name}}</ion-label>
