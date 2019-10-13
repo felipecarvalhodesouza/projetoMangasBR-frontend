@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{volume.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <img src="{{bucketUrl}}/volume{{[volume.id]}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
+    
+    <ion-label>Data: {{volume.date}}</ion-label>
+    <ion-label>Preço: R${{volume.price}}</ion-label>
+
+</ion-content>

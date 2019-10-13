@@ -87,7 +87,13 @@ export class CollectionService {
         this.volumeUser = {
             id: null,
             doesHave: doesHave,
-            name: null
+            name: null,
+            volume: {
+                id: null,
+                date: null,
+                name: null,
+                price: null
+            }
         }
         return this.http.put(
             `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}/${volumeUserId}`,

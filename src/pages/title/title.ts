@@ -11,6 +11,7 @@ import { StorageService } from '../../services/storage.service';
 import { ReviewService } from '../../services/domain/review.service';
 import { VolumeUserDTO } from '../../models/volume.user.dto';
 import { CollectionService } from '../../services/domain/collection.service';
+import { VolumeDTO } from '../../models/volume.dto';
 
 @IonicPage()
 @Component({
@@ -237,6 +238,12 @@ export class TitlePage {
     this.collectionService.updateVolumeUser(doesHave, this.title.id, volumeUserId).subscribe(response=>{
       console.log(response);
     })
+  }
+
+  goToVolumePage(volume: VolumeDTO){
+    this.navCtrl.push('VolumePage', {
+      volume: volume
+    });
   }
 
 }

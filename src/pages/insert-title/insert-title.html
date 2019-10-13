@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-      <button ion-button (click)="dismiss()" clear>
+      <button ion-button (click)="dismiss()" clear class="fechar">
          Fechar
       </button>
       <ion-title>Inserir Título</ion-title>
@@ -15,11 +15,11 @@
     </ion-item>
     <ion-item>
       <ion-label stacked>Início</ion-label>
-      <ion-datetime displayFormat="MM-YYYY-DD" placeholder="Selecione a data" formControlName="startDate"></ion-datetime>
+      <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Selecione a data" formControlName="startDate"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label stacked>Fim</ion-label>
-      <ion-datetime displayFormat="MM-YYYY-DD" placeholder="Selecione a data" formControlName="endDate"></ion-datetime>
+      <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Selecione a data" formControlName="endDate"></ion-datetime>
     </ion-item>  
     <ion-item>
         <ion-label stacked>Autor</ion-label>

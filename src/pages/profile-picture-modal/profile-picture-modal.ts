@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController } 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { UserService } from '../../services/domain/user.service';
 import { isTrueProperty } from 'ionic-angular/util/util';
+import { LoadingService } from '../../services/loading.service';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class ProfilePictureModalPage {
               public camera: Camera,
               public viewCtrl: ViewController,
               public userService: UserService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public loadingService: LoadingService) {
 
     this.userImg = navParams.get("userImg");
   }
@@ -91,12 +93,15 @@ export class ProfilePictureModalPage {
 
   sendPicture(){
     if(this.canUpload(this.verifySizeOfImg(this.picture))){
+      let loader = this.loadingService.presentLoading();
       this.userService.uploadPicture(this.picture)
       .subscribe(response => {
         this.picture = null;
+        this.loadingService.dismissLoader(loader);
         this.dismiss();
       },
       error =>{
+        this.loadingService.dismissLoader(loader);
       });
     } else{
       this.showAlert("Erro", "Tamanho da imagem superior ao permitido. Favor, selecione uma foto de até 500Kb.")

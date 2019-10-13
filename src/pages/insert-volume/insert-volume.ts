@@ -17,7 +17,7 @@ export class InsertVolumePage {
 
   title: TitleDTO;
   formGroup: FormGroup;
-  nextVolume: Number;
+  nextVolume: String;
 
   picture: string;
   cameraOn: boolean = false;
@@ -42,12 +42,6 @@ export class InsertVolumePage {
     });
   }
 
-  ionViewDidLoad() {
-    this.titleService.findVolumesByTitleId(this.title.id).subscribe(response=>{
-      this.nextVolume = (response.length) +1 ;
-    })
-  }
-
   presentLoading(){
     let loader = this.loadingControl.create({
       content: "Aguarde..."
@@ -61,17 +55,26 @@ export class InsertVolumePage {
     let loader = this.presentLoading();
     if(this.picture == null || this.canUpload(this.verifySizeOfImg(this.picture))){
       let newVolume:VolumeDTO = {
+        id: null,
         name: this.formGroup.value.name.trim(),
         date: this.formGroup.value.date,
         price: this.formGroup.value.price
       }
       newVolume.date = newVolume.date.replace("-","/");
+      newVolume.date = this.formataStringData(newVolume.date);
       this.titleService.insertVolumesOnTitle({ obj: newVolume, titleId: this.title.id }).subscribe(
         response =>{
-          this.sendPicture();
-          loader.dismiss();
-          this.navParams.get("AddTitleToCollectionPage").ionViewDidLoad();
-          this.showAlert("Sucesso","Volume adicionado com sucesso.")
+          this.titleService.findVolumesByTitleId(this.title.id).subscribe(response=>{
+            this.nextVolume = response[response.length-1].id;
+            this.sendPicture();
+            loader.dismiss();
+            this.navParams.get("AddTitleToCollectionPage").ionViewDidLoad();
+            this.showAlert("Sucesso","Volume adicionado com sucesso.")
+          },
+          error => {
+            loader.dismiss();
+            this.showAlert("Erro","Houve um problema na inserção da imagem do volume.");
+          })
         },
         error =>{
           loader.dismiss();
@@ -148,5 +151,12 @@ export class InsertVolumePage {
     if(size < 500000)
       return true;
     else return false;
+  }
+
+  formataStringData(data) {
+  var ano  = data.split("/")[0];
+  var mes  = data.split("/")[1];
+
+  return mes + '/' + ano;
   }
 }

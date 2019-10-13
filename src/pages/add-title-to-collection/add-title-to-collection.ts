@@ -227,4 +227,9 @@ export class AddTitleToCollectionPage {
     alert.present();
   }
 
+  goToVolumePage(volume: VolumeDTO){
+    this.navCtrl.push('VolumePage', {
+      volume: volume
+    });
+  }
 }
