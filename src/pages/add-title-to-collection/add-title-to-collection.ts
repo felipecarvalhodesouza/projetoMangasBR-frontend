@@ -11,6 +11,7 @@ import { ReviewService } from '../../services/domain/review.service';
 import { VolumeDTO } from '../../models/volume.dto';
 import { CollectionService } from '../../services/domain/collection.service';
 import { InsertVolumePage } from '../insert-volume/insert-volume';
+import { VolumeService } from '../../services/domain/volume.service';
 
 
 @IonicPage()
@@ -45,7 +46,8 @@ export class AddTitleToCollectionPage {
     public alertCtrl: AlertController,
     public datepipe: DatePipe,
     public reviewService: ReviewService,
-    public collectionService: CollectionService) {
+    public collectionService: CollectionService,
+    public volumeService: VolumeService) {
         this.title = this.navParams.get('title');
         this.userId = this.collectionService.returnUser().id;
         this.segments = "volumes";
@@ -231,5 +233,36 @@ export class AddTitleToCollectionPage {
     this.navCtrl.push('VolumePage', {
       volume: volume
     });
+  }
+
+  deleteVolume(volumeId){
+    if(this.admin){  
+      let alert = this.alertCtrl.create({
+        title: 'Cuidado',
+        message: 'Tem certeza que deseja eliminar o volume?',
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              let loader = this.presentLoading();
+              this.volumeService.removeVolume(volumeId).subscribe(response=>{
+                this.presentAlert("Sucesso!", "Volume deletado com sucesso!")
+                loader.dismiss();
+              },
+              error =>{
+                this.presentAlert("Falha!", "Erro na hora de excluir o Volume.")
+                loader.dismiss();
+              });
+            }
+          },
+          {
+            text: 'Não',
+            handler: () =>{
+            }
+          }
+        ]});
+      alert.present();
+    }
   }
 }
