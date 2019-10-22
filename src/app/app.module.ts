@@ -27,6 +27,7 @@ import { VolumeService } from '../services/domain/volume.service';
 import { Camera } from '@ionic-native/camera';
 import { InsertTitlePage } from '../pages/insert-title/insert-title';
 import { ProfilePictureModalPage } from '../pages/profile-picture-modal/profile-picture-modal';
+import { EditUserPage } from '../pages/edit-user/edit-user';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ProfilePictureModalPage } from '../pages/profile-picture-modal/profile-
     InsertVolumePage,
     PublisherInformationPage,
     InsertTitlePage,
-    ProfilePictureModalPage
+    ProfilePictureModalPage,
+    EditUserPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { ProfilePictureModalPage } from '../pages/profile-picture-modal/profile-
     InsertVolumePage,
     PublisherInformationPage,
     InsertTitlePage,
-    ProfilePictureModalPage
+    ProfilePictureModalPage,
+    EditUserPage
   ],
   providers: [
     StatusBar,

@@ -10,6 +10,7 @@ import { TitleDTO } from '../../models/title.dto';
 import { TitleService } from '../../services/domain/title.service';
 import { VolumeUserDTO } from '../../models/volume.user.dto';
 import { ProfilePictureModalPage } from '../profile-picture-modal/profile-picture-modal';
+import { EditUserPage } from '../edit-user/edit-user';
 
 
 @IonicPage()
@@ -105,5 +106,10 @@ export class ProfilePage {
   presentSendProfilePictureModal() {
       const modal = this.modalCtrl.create(ProfilePictureModalPage, { userImg: this.user.imageUrl });
       modal.present();
+  }
+
+  changeData(){
+    const modal = this.modalCtrl.create(EditUserPage, { user: this.user });
+    modal.present();
   }
 }

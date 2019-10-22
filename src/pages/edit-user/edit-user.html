@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button (click)="dismiss()" clear class="voltar">
+       Fechar
+    </button>
+    <ion-title>Editar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="formGroup" (ngSubmit)="showAlert(); $event.preventDefault()">
+    <ion-item>
+      <ion-label stacked>Nome</ion-label>
+      <ion-input maxlength="30"  formControlName="name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input maxlength="40" formControlName="email"></ion-input>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Salvar</button>
+  </form>
+<ion-content padding>

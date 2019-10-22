@@ -73,11 +73,7 @@ export class TitlePage {
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
       this.volumes = response['content'];
-      this.volumes.sort(function(a,b){
-        if(a.id < b.id) { return -1; }
-        if(a.id > b.id) { return 1; }
-        return 0;
-    });
+      this.sortVolumes();
       this.totalElements = response['totalElements'];
       loader.dismiss();
     },
@@ -91,6 +87,7 @@ export class TitlePage {
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
       this.volumes = this.volumes.concat(response['content']);
+      this.sortVolumes();
       this.lastPage = response['last'];
       loader.dismiss();
     },
@@ -246,4 +243,11 @@ export class TitlePage {
     });
   }
 
+  sortVolumes(){
+    this.volumes.sort(function(a, b){
+      if(a.volume.date < b.volume.date) { return -1; }
+      if(a.volume.date > b.volume.date) { return 1; }
+      return 0;
+    });
+  }
 }
