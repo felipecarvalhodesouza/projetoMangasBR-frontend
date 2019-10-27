@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button (click)="dismiss()" clear class="voltar">
+       Fechar
+    </button>
+    <ion-title>Inserir Editora</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<form [formGroup]="formGroup" (ngSubmit)="insertPublisher(); $event.preventDefault()">
+  <ion-item>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input maxlength="30"  formControlName="name" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label stacked>História</ion-label>
+      <ion-textarea maxlength="500"  formControlName="history" type="text"></ion-textarea>
+  </ion-item>
+  <button ion-button block type="submit" [disabled]="formGroup.invalid">Confirmar</button>
+</form>
+
+<ion-item *ngIf="picture">
+  <img [src]="picture" style="height: 220x; width: 150px; display:block; margin: auto">
+</ion-item>
+<button ion-button block (click)="getGalleryPicture()" [disabled]="cameraOn">Galeria</button>
+<button *ngIf="picture" ion-button outline block (click)="cancel()">Descartar Imagem</button>
+</ion-content>
+

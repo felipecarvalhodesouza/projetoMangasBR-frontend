@@ -28,6 +28,7 @@ import { Camera } from '@ionic-native/camera';
 import { InsertTitlePage } from '../pages/insert-title/insert-title';
 import { ProfilePictureModalPage } from '../pages/profile-picture-modal/profile-picture-modal';
 import { EditUserPage } from '../pages/edit-user/edit-user';
+import { InsertPublisherModalPage } from '../pages/insert-publisher-modal/insert-publisher-modal';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EditUserPage } from '../pages/edit-user/edit-user';
     PublisherInformationPage,
     InsertTitlePage,
     ProfilePictureModalPage,
-    EditUserPage
+    EditUserPage,
+    InsertPublisherModalPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,8 @@ import { EditUserPage } from '../pages/edit-user/edit-user';
     PublisherInformationPage,
     InsertTitlePage,
     ProfilePictureModalPage,
-    EditUserPage
+    EditUserPage,
+    InsertPublisherModalPage
   ],
   providers: [
     StatusBar,

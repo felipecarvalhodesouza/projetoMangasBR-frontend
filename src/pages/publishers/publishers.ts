@@ -5,6 +5,7 @@ import { PublisherDTO } from '../../models/publisher.dto';
 import { PublisherInformationPage } from '../publisher-information/publisher-information';
 import { StorageService } from '../../services/storage.service';
 import { UserService } from '../../services/domain/user.service';
+import { InsertPublisherModalPage } from '../insert-publisher-modal/insert-publisher-modal';
 
 @IonicPage()
 @Component({
@@ -46,4 +47,8 @@ export class PublishersPage {
       });
   }
 
+  presentInsertPublisherModal(){
+    const modal = this.modalCtrl.create(InsertPublisherModalPage, { publishersPage: this});
+    modal.present();
+  }
 }

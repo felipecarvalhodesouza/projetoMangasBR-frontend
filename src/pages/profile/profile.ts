@@ -23,7 +23,7 @@ export class ProfilePage {
   user: UserDTO;
   segments: String;
 
-  titles: number = 0 ;;
+  titles: number = 0 ;
   completedTitles: number = 0 ;
   numberOfVolumes: number = 0 ;
   missingVolumes: number = 0 ;
@@ -84,7 +84,8 @@ export class ProfilePage {
     this.collectionService.findCollection(this.user.id).subscribe(response =>{
       let titles: [TitleDTO] = response['titles'];
         for(let i=0; i < titles.length; i++){
-          this.titleService.findTitleVolumesWithouthPageable(this.user.id, (i+1).toString()).subscribe(response=>{
+          this.titleService.findTitleVolumesWithouthPageable(this.user.id, (i+1).toString()).
+          subscribe(response=>{
             let aux=0;
             let volumes: [VolumeUserDTO] = response;
             volumes.forEach(element => {
@@ -96,10 +97,12 @@ export class ProfilePage {
                 this.missingVolumes++;
               }
             });
-            if(aux===0) this.completedTitles++;
+            this.titles++;
+            if(aux===0) {
+              this.completedTitles++;
+            }
           });
         }
-        this.titles++;
       }); 
   }
 

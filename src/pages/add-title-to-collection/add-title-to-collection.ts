@@ -86,12 +86,7 @@ export class AddTitleToCollectionPage {
     this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
       this.volumes = response;
-
-      this.volumes.sort(function(a, b){
-        if(a.date < b.date) { return -1; }
-        if(a.date > b.date) { return 1; }
-        return 0;
-    });
+      this.sort();
       loader.dismiss();
     },
     error =>{
@@ -231,7 +226,8 @@ export class AddTitleToCollectionPage {
 
   goToVolumePage(volume: VolumeDTO){
     this.navCtrl.push('VolumePage', {
-      volume: volume
+      volume: volume,
+      titleId: this.title.id
     });
   }
 
@@ -264,5 +260,13 @@ export class AddTitleToCollectionPage {
         ]});
       alert.present();
     }
+  }
+
+  sort(){
+      this.volumes.sort(function(a, b){
+        if(a.date < b.date) { return -1; }
+        if(a.date > b.date) { return 1; }
+        return 0;
+      });
   }
 }

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-      <button ion-button (click)="dismiss()" clear>
+      <button ion-button (click)="dismiss()" clear class="voltar">
          Fechar
       </button>
       <ion-title>{{publisher.name}}</ion-title>
@@ -13,7 +13,7 @@
       <ion-grid>
           <ion-row>
             <ion-col col-6>
-                <img src="{{bucketUrl}}/publisher{{publisher.id}}.jpg" style="border: black">
+                <img src="{{bucketUrl}}/publisher{{publisher.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" style="border: black">
             </ion-col>
             <ion-col style="padding-left: 15px; padding-top: 3"> 
 

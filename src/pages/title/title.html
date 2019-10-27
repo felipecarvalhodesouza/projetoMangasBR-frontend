@@ -45,21 +45,21 @@
               <ion-col col-4 *ngIf="i < volumes.length">
                 <div>
                     <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i].doesHave"  (ionChange)="changeVolumeUser(volumes[i].doesHave, volumes[i].id)"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i].volume)">
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i].volume, title.id)">
                 </div>    
                 <p style="text-align: center; align-content: left"> {{volumes[i].name}} </p>
             </ion-col>
               <ion-col col-4 *ngIf="i+1 < volumes.length">
                 <div>
                     <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+1].doesHave"  (ionChange)="changeVolumeUser(volumes[i+1].doesHave, volumes[i+1].id)"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+1].volume)">
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+1].volume, title.id)">
                 </div>
                 <p style="text-align: center"> {{volumes[i+1].name}} </p>
               </ion-col>
               <ion-col col-4 *ngIf="i+2 < volumes.length">
                 <div>
                     <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+2].doesHave"  (ionChange)="changeVolumeUser(volumes[i+2].doesHave, volumes[i+2].id)"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+2].volume)">
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+2].volume, title.id)">
                 </div>
               <p style="text-align: center"> {{volumes[i+2].name}} </p>
               </ion-col>

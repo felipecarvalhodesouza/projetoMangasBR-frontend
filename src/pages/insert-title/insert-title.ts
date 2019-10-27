@@ -44,10 +44,6 @@ export class InsertTitlePage {
     });
   }
 
-  ionViewDidLoad() {
-
-  }
-
   presentLoading(){
     let loader = this.loadingControl.create({
       content: "Aguarde..."

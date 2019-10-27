@@ -73,8 +73,8 @@ export class TitlePage {
     this.titleService.findTitleVolumes(this.userId, this.titleIndex, this.page, 9).
     subscribe(response =>{
       this.volumes = response['content'];
-      this.sortVolumes();
       this.totalElements = response['totalElements'];
+      this.sortVolumes();
       loader.dismiss();
     },
     error =>{
@@ -237,16 +237,17 @@ export class TitlePage {
     })
   }
 
-  goToVolumePage(volume: VolumeDTO){
+  goToVolumePage(volume: VolumeDTO, titleId: string){
     this.navCtrl.push('VolumePage', {
-      volume: volume
+      volume: volume,
+      titleId: titleId
     });
   }
 
   sortVolumes(){
     this.volumes.sort(function(a, b){
-      if(a.volume.date < b.volume.date) { return -1; }
-      if(a.volume.date > b.volume.date) { return 1; }
+      if(a.id < b.id) { return -1; }
+      if(a.id > b.id) { return 1; }
       return 0;
     });
   }
