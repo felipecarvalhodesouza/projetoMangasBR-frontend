@@ -74,6 +74,7 @@ export class AddTitleToCollectionPage {
     this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
       this.volumes = response;
+      this.totalElements = this.volumes.length;
       loader.dismiss();
     },
     error =>{
@@ -86,6 +87,7 @@ export class AddTitleToCollectionPage {
     this.titleService.findVolumesByTitleId(this.title.id).
     subscribe(response =>{
       this.volumes = response;
+      this.totalElements = this.volumes.length;
       this.sort();
       loader.dismiss();
     },

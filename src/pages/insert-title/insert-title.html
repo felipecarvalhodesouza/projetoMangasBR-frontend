@@ -14,13 +14,20 @@
       <ion-input maxlength="30"  formControlName="name" type="text"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label>Status</ion-label>
+      <ion-select formControlName="status">
+        <ion-option [value]=0>Em andamento</ion-option>
+        <ion-option [value]=1>Completo</ion-option>
+      </ion-select>
+  </ion-item>
+    <ion-item>
       <ion-label stacked>Início</ion-label>
       <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Selecione a data" formControlName="startDate"></ion-datetime>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="this.formGroup.value.status == 1">
       <ion-label stacked>Fim</ion-label>
-      <ion-datetime displayFormat="DD-MM-YYYY" placeholder="Selecione a data" formControlName="endDate"></ion-datetime>
-    </ion-item>  
+      <ion-datetime required displayFormat="DD-MM-YYYY" placeholder="Selecione a data" formControlName="endDate"></ion-datetime>
+    </ion-item>
     <ion-item>
         <ion-label stacked>Autor</ion-label>
         <ion-input maxlength="30"  formControlName="author"></ion-input>

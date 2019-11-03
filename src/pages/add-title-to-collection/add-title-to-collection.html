@@ -46,7 +46,7 @@
             <div *ngFor="let volume of volumes; let i = index;">
               <ion-row *ngIf="i % 3 === 0">
                 <ion-col col-4 *ngIf="i < volumes.length" (press)="deleteVolume(volumes[i])">
-                  <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i])">
+                  <img height='150' src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i])">
                   <p style="text-align: center"> {{volumes[i].name}} </p>
               </ion-col>
                 <ion-col col-4 *ngIf="i+1 < volumes.length" (press)="deleteVolume(volumes[i+1])">

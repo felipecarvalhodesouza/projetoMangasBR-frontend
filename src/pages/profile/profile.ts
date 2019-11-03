@@ -27,6 +27,7 @@ export class ProfilePage {
   completedTitles: number = 0 ;
   numberOfVolumes: number = 0 ;
   missingVolumes: number = 0 ;
+  valueOfCollection: number = 0.0;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -91,6 +92,7 @@ export class ProfilePage {
             volumes.forEach(element => {
               if(element.doesHave){
                 this.numberOfVolumes++;
+                this.valueOfCollection = parseFloat((this.valueOfCollection + element.volume.price).toFixed(2));
               }
               else{
                 aux++;
@@ -103,7 +105,7 @@ export class ProfilePage {
             }
           });
         }
-      }); 
+      });
   }
 
   presentSendProfilePictureModal() {

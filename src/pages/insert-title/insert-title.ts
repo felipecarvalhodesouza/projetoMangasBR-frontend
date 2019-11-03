@@ -38,6 +38,7 @@ export class InsertTitlePage {
       name: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: [''],
+      status: ['', [Validators.required]],
       publisher: ['', [Validators.required]],
       author: ['', [Validators.required]],
       synopsis: ['', [Validators.required]]
@@ -60,7 +61,7 @@ export class InsertTitlePage {
         id: null,
         name: this.formGroup.value.name.trim(),
         score: null,
-        finished: false,
+        finished: this.formGroup.value.status,
         publisher: {
           id: "",
           name: "",
