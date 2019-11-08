@@ -28,6 +28,7 @@ export class ProfilePage {
   numberOfVolumes: number = 0 ;
   missingVolumes: number = 0 ;
   valueOfCollection: number = 0.0;
+  paidValueOfCollection: number = 0.0;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -93,6 +94,7 @@ export class ProfilePage {
               if(element.doesHave){
                 this.numberOfVolumes++;
                 this.valueOfCollection = parseFloat((this.valueOfCollection + element.volume.price).toFixed(2));
+                this.paidValueOfCollection = parseFloat((this.paidValueOfCollection + element.paidPrice).toFixed(2));
               }
               else{
                 aux++;

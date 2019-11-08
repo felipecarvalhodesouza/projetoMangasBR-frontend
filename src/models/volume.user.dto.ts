@@ -5,4 +5,5 @@ export interface VolumeUserDTO {
     volume: VolumeDTO;
     doesHave: boolean;
     name: string;
+    paidPrice: number;
 } 

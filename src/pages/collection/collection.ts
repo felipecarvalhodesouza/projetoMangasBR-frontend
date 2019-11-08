@@ -141,5 +141,4 @@ export class CollectionPage {
     });
     alert.present();
   }
-
 }

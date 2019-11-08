@@ -83,8 +83,8 @@ export class CollectionService {
             `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}`, options)
     }
 
-    updateVolumeUser(doesHave: boolean, titleId: string, volumeUserId: string){
-        this.volumeUser = {
+    updateVolumeUser(doesHave: boolean, titleId: string, volumeUserId: string, paidPrice: number){
+        let volumeUser = {
             id: null,
             doesHave: doesHave,
             name: null,
@@ -93,11 +93,14 @@ export class CollectionService {
                 date: null,
                 name: null,
                 price: null
-            }
+            },
+            paidPrice: null
         }
+        volumeUser.paidPrice = paidPrice;
+
         return this.http.put(
             `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}/${volumeUserId}`,
-            this.volumeUser,
+            volumeUser,
             {
                 observe: 'response',
                 responseType: 'text'

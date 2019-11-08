@@ -231,16 +231,20 @@ export class TitlePage {
     return;
   }
 
-  changeVolumeUser(doesHave: boolean, volumeUserId: string){
-    this.collectionService.updateVolumeUser(doesHave, this.title.id, volumeUserId).subscribe(response=>{
-      console.log(response);
-    })
+  changeVolumeUser(doesHave: boolean, volume: VolumeUserDTO){
+    if(doesHave){
+      this.showPrompt(doesHave, volume);
+    } else{
+        this.collectionService.updateVolumeUser(doesHave, this.title.id, volume.id.toString(), 0).
+        subscribe(response=>{});
+    }
   }
 
-  goToVolumePage(volume: VolumeDTO, titleId: string){
+  goToVolumePage(volume: VolumeDTO, titleId: string, paidPrice: number){
     this.navCtrl.push('VolumePage', {
       volume: volume,
-      titleId: titleId
+      titleId: titleId,
+      paidPrice: paidPrice.toFixed(2)
     });
   }
 
@@ -251,4 +255,36 @@ export class TitlePage {
       return 0;
     });
   }
+
+  showPrompt(doesHave: boolean, volume: VolumeUserDTO) {
+    const prompt = this.alertCtrl.create({
+      title: 'Valor do volume',
+      message: "Insira o valor pago pelo volume. Deixe vazio para utilizar o valor de capa.",
+      inputs: [
+        { 
+          type: "number",
+          name: 'Valor',
+          placeholder: '0.0'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.collectionService.updateVolumeUser(doesHave,
+                                                    this.title.id,
+                                                    volume.id.toString(),
+                                                    this.returnPaidPrice(parseFloat(data.Valor).toFixed(2), volume))
+                                                    .subscribe(response=>{});
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  returnPaidPrice(valor: any, volume: VolumeUserDTO){
+    return (valor != "") ? valor : volume.volume.price;
+  }
+
 }

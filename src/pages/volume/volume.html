@@ -8,6 +8,7 @@
     <img style="size: 200%;" src="{{bucketUrl}}/title{{titleId}}volume{{[volume.id]}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'">
     
     <ion-label>Data: {{volume.date}}</ion-label>
-    <ion-label>Preço: R${{volume.price}}</ion-label>
+    <ion-label>Preço de capa: R${{volume.price}}</ion-label>
+    <ion-label *ngIf="paidPrice!=null && paidPrice!=0">Preço pago: R${{paidPrice}}</ion-label>
 
 </ion-content>
