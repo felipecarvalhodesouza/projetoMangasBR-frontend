@@ -231,20 +231,23 @@ export class TitlePage {
     return;
   }
 
-  changeVolumeUser(doesHave: boolean, volume: VolumeUserDTO){
+  changeVolumeUser(doesHave: boolean, volume: VolumeUserDTO, index: number){
     if(doesHave){
-      this.showPrompt(doesHave, volume);
+      this.showPrompt(doesHave, volume, index);
     } else{
         this.collectionService.updateVolumeUser(doesHave, this.title.id, volume.id.toString(), 0).
-        subscribe(response=>{});
+        subscribe(response=>{
+          this.volumes[index].paidPrice = 0;
+        });
     }
   }
 
-  goToVolumePage(volume: VolumeDTO, titleId: string, paidPrice: number){
+  goToVolumePage(volume: VolumeDTO, titleId: string, paidPrice: number, doesHave: boolean){
     this.navCtrl.push('VolumePage', {
       volume: volume,
       titleId: titleId,
-      paidPrice: paidPrice.toFixed(2)
+      paidPrice: paidPrice,
+      doesHave: doesHave
     });
   }
 
@@ -256,7 +259,7 @@ export class TitlePage {
     });
   }
 
-  showPrompt(doesHave: boolean, volume: VolumeUserDTO) {
+  showPrompt(doesHave: boolean, volume: VolumeUserDTO, index: number) {
     const prompt = this.alertCtrl.create({
       title: 'Valor do volume',
       message: "Insira o valor pago pelo volume. Deixe vazio para utilizar o valor de capa.",
@@ -264,27 +267,28 @@ export class TitlePage {
         { 
           type: "number",
           name: 'Valor',
-          placeholder: '0.0'
+          placeholder: 'Insira o valor aqui'
         },
       ],
       buttons: [
         {
           text: 'Ok',
           handler: data => {
+            if(data.Valor===""){
+              data.Valor  = volume.volume.price
+            }
             this.collectionService.updateVolumeUser(doesHave,
                                                     this.title.id,
                                                     volume.id.toString(),
-                                                    this.returnPaidPrice(parseFloat(data.Valor).toFixed(2), volume))
-                                                    .subscribe(response=>{});
+                                                    data.Valor)
+                                                    .subscribe(response=>{
+                                                      this.volumes[index].paidPrice = parseFloat(data.Valor);
+                                                    });
           }
         }
-      ]
+      ],
+      enableBackdropDismiss: false
     });
     prompt.present();
   }
-
-  returnPaidPrice(valor: any, volume: VolumeUserDTO){
-    return (valor != "") ? valor : volume.volume.price;
-  }
-
 }

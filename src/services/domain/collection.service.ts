@@ -94,9 +94,8 @@ export class CollectionService {
                 name: null,
                 price: null
             },
-            paidPrice: null
+            paidPrice: paidPrice
         }
-        volumeUser.paidPrice = paidPrice;
 
         return this.http.put(
             `${API_CONFIG.baseUrl}/users/${this.user.id}/collection/${titleId}/${volumeUserId}`,

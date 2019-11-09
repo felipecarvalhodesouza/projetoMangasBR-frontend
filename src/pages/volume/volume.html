@@ -9,6 +9,6 @@
     
     <ion-label>Data: {{volume.date}}</ion-label>
     <ion-label>Preço de capa: R${{volume.price}}</ion-label>
-    <ion-label *ngIf="paidPrice!=null && paidPrice!=0">Preço pago: R${{paidPrice}}</ion-label>
+    <ion-label *ngIf="paidPrice!=null && doesHave">Preço pago: R${{paidPrice}}</ion-label>
 
 </ion-content>

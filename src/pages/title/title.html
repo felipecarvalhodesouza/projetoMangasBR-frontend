@@ -44,22 +44,22 @@
             <ion-row *ngIf="i % 3 === 0">
               <ion-col col-4 *ngIf="i < volumes.length">
                 <div>
-                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i].doesHave"  (ionChange)="changeVolumeUser(volumes[i].doesHave, volumes[i])"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i].volume, title.id, volumes[i].paidPrice)">
+                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i].doesHave"  (ionChange)="changeVolumeUser(volumes[i].doesHave, volumes[i], i)"></ion-checkbox>
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i].volume, title.id, volumes[i].paidPrice, volumes[i].doesHave)">
                 </div>    
                 <p style="text-align: center; align-content: left"> {{volumes[i].name}} </p>
             </ion-col>
               <ion-col col-4 *ngIf="i+1 < volumes.length">
                 <div>
-                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+1].doesHave"  (ionChange)="changeVolumeUser(volumes[i+1].doesHave, volumes[i+1])"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+1].volume, title.id, volumes[i+1].paidPrice)">
+                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+1].doesHave"  (ionChange)="changeVolumeUser(volumes[i+1].doesHave, volumes[i+1], (i+1))"></ion-checkbox>
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+1].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+1].volume, title.id, volumes[i+1].paidPrice, volumes[i+1].doesHave)">
                 </div>
                 <p style="text-align: center"> {{volumes[i+1].name}} </p>
               </ion-col>
               <ion-col col-4 *ngIf="i+2 < volumes.length">
                 <div>
-                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+2].doesHave"  (ionChange)="changeVolumeUser(volumes[i+2].doesHave, volumes[i+2])"></ion-checkbox>
-                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+2].volume, title.id, volumes[i+2].paidPrice)">
+                    <ion-checkbox class="my-checkbox" color="dark" [(ngModel)]="volumes[i+2].doesHave"  (ionChange)="changeVolumeUser(volumes[i+2].doesHave, volumes[i+2], (i+2))"></ion-checkbox>
+                    <img src="{{bucketUrl}}/title{{title.id}}volume{{volumes[i+2].volume.id}}.jpg" onerror="this.onerror=null;this.src='assets/imgs/imagem-nao-encontrada.png'" (click)="goToVolumePage(volumes[i+2].volume, title.id, volumes[i+2].paidPrice, volumes[i+2].doesHave)">
                 </div>
               <p style="text-align: center"> {{volumes[i+2].name}} </p>
               </ion-col>
