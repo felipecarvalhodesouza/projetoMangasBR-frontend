@@ -12,15 +12,17 @@ export class VolumePage {
 
   volume: VolumeDTO;
   titleId: string;
-  paidPrice: number;
+  paidPrice: string;
   doesHave: boolean;
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
+  price: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams) {
                 this.volume = this.navParams.get('volume');
                 this.titleId = this.navParams.get('titleId');
-                this.paidPrice = this.navParams.get('paidPrice');
+                this.paidPrice = parseFloat(this.navParams.get('paidPrice')).toFixed(2);
                 this.doesHave = this.navParams.get('doesHave');
+                this.price = this.volume.price.toFixed(2);
   }
 }

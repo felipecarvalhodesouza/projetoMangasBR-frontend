@@ -29,6 +29,8 @@ export class ProfilePage {
   missingVolumes: number = 0 ;
   valueOfCollection: number = 0.0;
   paidValueOfCollection: number = 0.0;
+  stringValueOfCollection: string;
+  stringPaidValueOfCollection: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -93,8 +95,8 @@ export class ProfilePage {
             volumes.forEach(element => {
               if(element.doesHave){
                 this.numberOfVolumes++;
-                this.valueOfCollection = parseFloat((this.valueOfCollection + element.volume.price).toFixed(2));
-                this.paidValueOfCollection = parseFloat((this.paidValueOfCollection + element.paidPrice).toFixed(2));
+                this.valueOfCollection = (this.valueOfCollection + element.volume.price);
+                this.paidValueOfCollection = (this.paidValueOfCollection + element.paidPrice);
               }
               else{
                 aux++;
@@ -105,6 +107,8 @@ export class ProfilePage {
             if(aux===0) {
               this.completedTitles++;
             }
+            this.stringValueOfCollection = this.valueOfCollection.toFixed(2);
+            this.stringPaidValueOfCollection = this.paidValueOfCollection.toFixed(2);
           });
         }
       });
