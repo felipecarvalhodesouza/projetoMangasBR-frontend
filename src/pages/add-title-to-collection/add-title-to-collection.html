@@ -71,10 +71,10 @@
             <ion-grid>
             <ion-row *ngIf="verifyIndexOfReview(review)%2!=0" style="align-items: center" >
               <ion-col>
-                  <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+                  <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'" style="height: 65px;">
               </ion-col>
               <ion-col col-10>
-                  <div class="speech-bubble-left" (press)="deleteReview(review)">
+                  <div class="speech-bubble-left">
                       <ion-badge style="float:right; padding: 5px; color:white">{{review.score}}</ion-badge>
                       <ion-label class="speech-bubble-left-text" text-wrap>{{review.text}}</ion-label>
                       <ion-label class="speech-bubble-left-text" style="font: bold" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
@@ -83,14 +83,14 @@
             </ion-row>
             <ion-row *ngIf="verifyIndexOfReview(review)%2==0" style="align-items: center" >
                 <ion-col col-10>
-                    <div class="speech-bubble-right" (press)="deleteReview(review)">
+                    <div class="speech-bubble-right">
                         <ion-badge style="float:right; margin: 5px; color:white">{{review.score}}</ion-badge>
                         <ion-label class="speech-bubble-right-text" text-wrap>{{review.text}}</ion-label>
                         <ion-label class="speech-bubble-right-text" style="font: bold; padding-bottom: 5px" text-wrap>{{review.authorName}} em {{review.date}}</ion-label>                    
                       </div>
                 </ion-col>
                 <ion-col>
-                    <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'">
+                    <img class="userImg" [src]="review?.imageUrl || 'assets/imgs/avatar-blank.png'" style="height: 65px;">
                 </ion-col>
               </ion-row>
             </ion-grid>
