@@ -43,6 +43,9 @@ export class ErrorInterceptor implements HttpInterceptor{
                     case 422:
                         this.handle422(errorObj);
                         break;
+                    case 503:
+                        this.handle503();
+                        break;
                     default:
                         this.handleDefaultError(errorObj);
                 }
@@ -100,18 +103,47 @@ export class ErrorInterceptor implements HttpInterceptor{
        alert.present();
     }
 
-    handleDefaultError(errorObj){
+    handle503(){
         let alert = this.alertCtrl.create({
-            title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
-            message: errorObj.message,
-            enableBackdropDismiss: false,
-            buttons: [
-                {
-                    text: 'Ok'
-                }
-            ]
-       });
-       alert.present();
+             title: 'Serviço indisponível',
+             message: 'Tente novamente mais tarde',
+             enableBackdropDismiss: false,
+             buttons: [
+                 {
+                     text: 'Ok'
+                 }
+             ]
+        });
+        alert.present();
+    }
+
+    handleDefaultError(errorObj){
+        if(errorObj.message=="Could not roll back JPA transaction; nested exception is org.hibernate.TransactionException: Unable to rollback against JDBC Connection"){
+            let alert = this.alertCtrl.create({
+                title: 'Conexões excedidas',
+                message: "Infelizmente, o limite de conexões por hora foi excedido. Tente novamente mais tarde",
+                enableBackdropDismiss: false,
+                buttons: [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+        });
+        alert.present();
+
+        } else{
+            let alert = this.alertCtrl.create({
+                title: 'Erro ' + errorObj.status + ': ' + errorObj.error,
+                message: errorObj.message,
+                enableBackdropDismiss: false,
+                buttons: [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+        });
+        alert.present();
+        }
     }
     
     private listErrors(messages: FieldMessage[]) : string {

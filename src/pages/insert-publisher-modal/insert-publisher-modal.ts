@@ -55,7 +55,9 @@ export class InsertPublisherModalPage {
       this.camera.getPicture(options).then((imageData) => {
         this.picture = 'data:image/png;base64,' + imageData;
         this.cameraOn = false;
-      }, (err) => {});
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   cancel(){
@@ -117,6 +119,11 @@ export class InsertPublisherModalPage {
       this.publisherService.insertPublisher({ obj: newPublisher}).subscribe(
         response =>{
           this.publisherService.findPublishers().subscribe(response=>{
+            response.sort(function(a, b){
+              if(a.id < b.id) { return -1; }
+              if(a.id > b.id) { return 1; }
+              return 0;
+            });
             this.publisherId = response.pop().id
             this.sendPicture();
             this.navParams.get("publishersPage").ionViewDidLoad();
@@ -138,5 +145,4 @@ export class InsertPublisherModalPage {
         this.picture = null;
     }
   }
-
 }
